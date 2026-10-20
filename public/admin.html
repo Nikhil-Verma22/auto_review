@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Owner Admin & AI Review Reply Studio — Pink City Gems</title>
+  <meta name="description" content="Manage review pool, generate SEO owner replies, and configure business settings for Pink City Gems.">
+  <link rel="stylesheet" href="./assets/style.css">
+  <style>
+    .admin-container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 30px 20px 80px 20px;
+    }
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin: 20px 0 30px 0;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      box-shadow: var(--glass-glow);
+    }
+    .stat-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .stat-value {
+      font-family: var(--font-heading);
+      font-size: 28px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-top: 6px;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+    .form-input, .form-textarea, .form-select {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-sm);
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding: 10px 14px;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+    }
+    .btn-action-primary {
+      background: var(--btn-gradient);
+      color: white;
+      border: none;
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-action-primary:hover {
+      background: var(--btn-gradient-hover);
+      transform: translateY(-1px);
+    }
+    .reply-card {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-top: 14px;
+    }
+    .reply-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .reply-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: rgba(59, 130, 246, 0.2);
+      color: #93c5fd;
+    }
+    .reply-content {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #e2e8f0;
+      margin-bottom: 12px;
+      white-space: pre-wrap;
+    }
+    .btn-copy-reply {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-copy-reply:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+
+  <div class="admin-container">
+    <!-- Top Bar -->
+    <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: gap; gap: 12px;">
+      <div>
+        <a href="./index.html" style="color: #60a5fa; text-decoration: none; font-size: 13px; font-weight: 600;">
+          ← View Mobile Review Page
+        </a>
+        <h1 class="business-name" style="margin-top: 6px; font-size: 28px;">
+          Owner Admin & AI Reply Studio
+        </h1>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <a href="./standee.html" class="btn-test-action" style="text-decoration: none; padding: 10px 16px; font-size: 13px;">
+          🖨️ Standee Studio
+        </a>
+      </div>
+    </header>
+
+    <!-- Quick Links & NFC Hub -->
+    <div class="hub-card" style="margin-bottom: 24px;">
+      <h2 style="font-family: var(--font-heading); font-size: 18px; color: #ffffff; margin-bottom: 6px;">
+        🔗 Quick Links & NFC Hub
+      </h2>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+        Your system is live on GitHub Pages. Any phone scanning your QR or tapping your NFC will be directed here:
+      </p>
+
+      <div class="nfc-url-box">
+        <span id="admin-nfc-url">https://nikhil-verma22.github.io/auto_review/</span>
+        <button class="btn-copy-url" id="btn-admin-copy-nfc">📋 Copy Target URL</button>
+      </div>
+
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="./assets/qr-code.png" download class="btn-download-asset" style="padding: 8px 14px; font-size: 12px;">
+          🖼️ Download QR PNG (1024×1024)
+        </a>
+        <a href="./assets/qr-code.svg" download class="btn-download-asset" style="padding: 8px 14px; font-size: 12px;">
+          📐 Download QR SVG
+        </a>
+      </div>
+    </div>
+
+    <!-- Review Pool Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Total Reviews Pool</div>
+        <div class="stat-value" id="stat-total" style="color: #60a5fa;">--</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Available / Unused</div>
+        <div class="stat-value" id="stat-available" style="color: #34d399;">--</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Claimed / Used</div>
+        <div class="stat-value" id="stat-used" style="color: #f59e0b;">--</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Active Categories</div>
+        <div class="stat-value" id="stat-categories" style="color: #a78bfa;">5</div>
+      </div>
+    </div>
+
+    <!-- AI Review Reply Studio -->
+    <div class="hub-card" style="margin-bottom: 30px;">
+      <h2 style="font-family: var(--font-heading); font-size: 20px; color: #ffffff; margin-bottom: 6px;">
+        🤖 AI Review Reply Generator
+      </h2>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+        Received a new review on Google? Paste it below to generate 3 tailored, SEO-boosted responses incorporating your location and gemstone keywords:
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div class="form-group">
+          <label class="form-label" for="reply-customer-name">Reviewer Name</label>
+          <input type="text" id="reply-customer-name" class="form-input" placeholder="e.g. Dr. Amit Bansal">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reply-star-rating">Star Rating</label>
+          <select id="reply-star-rating" class="form-select">
+            <option value="5">★★★★★ (5 Stars)</option>
+            <option value="4">★★★★☆ (4 Stars)</option>
+            <option value="3">★★★☆☆ (3 Stars)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="reply-review-text">Customer's Review Text</label>
+        <textarea id="reply-review-text" class="form-textarea" rows="3" placeholder="Paste the customer's Google review here..."></textarea>
+      </div>
+
+      <button id="btn-generate-replies" class="btn-action-primary">
+        ✨ Generate 3 SEO Replies
+      </button>
+
+      <!-- Reply Output Cards -->
+      <div id="reply-results-container" style="display: none; margin-top: 24px;">
+        <h3 style="font-size: 14px; font-weight: 700; color: #38bdf8; margin-bottom: 8px;">
+          Generated Responses (Click to Copy):
+        </h3>
+        <div id="replies-list"></div>
+      </div>
+    </div>
+
+    <!-- Configuration & Direct Review Link Editor -->
+    <div class="hub-card">
+      <h2 style="font-family: var(--font-heading); font-size: 20px; color: #ffffff; margin-bottom: 6px;">
+        ⚙️ Business Config & Direct Review URL
+      </h2>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+        Verify or update your Google review deep link, address, and SEO keywords:
+      </p>
+
+      <div class="form-group">
+        <label class="form-label" for="cfg-biz-name">Business Display Name</label>
+        <input type="text" id="cfg-biz-name" class="form-input">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="cfg-review-url">
+          Direct Google Review / Maps URL (Opens review dialog directly)
+        </label>
+        <input type="text" id="cfg-review-url" class="form-input" placeholder="https://maps.google.com/?cid=9732890204388975020 or https://g.page/r/.../review">
+        <span style="font-size: 11px; color: #94a3b8; margin-top: 4px; display: block;">
+          Tip: You can use your Google Maps CID link, Place ID link, or paste your <code>g.page/r/.../review</code> shortlink anytime.
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="cfg-locality">Locality / Sector</label>
+        <input type="text" id="cfg-locality" class="form-input">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="cfg-full-address">Full Address</label>
+        <input type="text" id="cfg-full-address" class="form-input">
+      </div>
+
+      <div style="display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap;">
+        <button id="btn-download-config" class="btn-action-primary">
+          💾 Download Updated business.json
+        </button>
+        <button id="btn-download-reviews" class="btn-download-asset" style="cursor: pointer;">
+          📥 Download reviews.json Pool
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./assets/data-bundle.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const data = window.SMART_CONNECT_DATA;
+      if (!data) return;
+
+      const { business, categories, reviews } = data;
+
+      // Stats
+      const total = reviews.length;
+      const used = reviews.filter(r => r.used).length;
+      const available = total - used;
+
+      document.getElementById('stat-total').textContent = total;
+      document.getElementById('stat-available').textContent = available;
+      document.getElementById('stat-used').textContent = used;
+      document.getElementById('stat-categories').textContent = categories ? categories.length : 5;
+
+      // Fill Config inputs
+      document.getElementById('cfg-biz-name').value = business.name || 'Pink City Gems';
+      document.getElementById('cfg-review-url').value = business.googleReviewUrl || '';
+      document.getElementById('cfg-locality').value = business.locality || 'Sector 23-C, Chandigarh';
+      document.getElementById('cfg-full-address').value = business.fullAddress || '';
+      document.getElementById('admin-nfc-url').textContent = business.targetUrl || window.location.href.replace(/admin\.html.*/, '');
+
+      // Copy NFC
+      const btnCopy = document.getElementById('btn-admin-copy-nfc');
+      btnCopy.addEventListener('click', () => {
+        const url = document.getElementById('admin-nfc-url').textContent.trim();
+        navigator.clipboard.writeText(url).then(() => {
+          btnCopy.textContent = '✓ Copied!';
+          setTimeout(() => { btnCopy.textContent = '📋 Copy Target URL'; }, 2000);
+        });
+      });
+
+      // AI Reply Generation
+      const btnGen = document.getElementById('btn-generate-replies');
+      btnGen.addEventListener('click', () => {
+        const name = (document.getElementById('reply-customer-name').value || 'Customer').trim();
+        const stars = document.getElementById('reply-star-rating').value;
+        const text = document.getElementById('reply-review-text').value.trim();
+        const biz = business.name || 'Pink City Gems';
+        const loc = business.locality || 'Sector 23-C, Chandigarh';
+
+        const replies = [
+          {
+            tone: 'Warm & Grateful',
+            text: `Dear ${name}, thank you so much for your wonderful 5-star review! The entire team at ${biz} in ${loc} is delighted to know that you had a great experience with our certified gemstone collection. Your trust means the world to us. Wishing you joy, positivity, and success!`
+          },
+          {
+            tone: 'SEO-Rich & Professional',
+            text: `Thank you for sharing your feedback, ${name}! Providing authentic, lab-certified natural gemstones (including Ceylon Pukhraj, Zambian Emerald, and Burma Ruby) alongside personalized astrological recommendations is our core commitment here at ${biz} (${loc}). We truly appreciate your support!`
+          },
+          {
+            tone: 'Short & Punchy',
+            text: `Dear ${name}, thank you for your kind 5-star rating! We are so glad you loved your experience at ${biz} in ${loc}. We look forward to seeing you again soon!`
+          }
+        ];
+
+        const container = document.getElementById('replies-list');
+        container.innerHTML = replies.map((r, i) => `
+          <div class="reply-card">
+            <div class="reply-card-header">
+              <span class="reply-badge">${r.tone}</span>
+              <button class="btn-copy-reply" onclick="copyReplyText(${i})">
+                📋 Copy Reply
+              </button>
+            </div>
+            <div class="reply-content" id="reply-text-${i}">${r.text}</div>
+          </div>
+        `).join('');
+
+        document.getElementById('reply-results-container').style.display = 'block';
+      });
+
+      // Download Config
+      document.getElementById('btn-download-config').addEventListener('click', () => {
+        const updatedConfig = {
+          ...data,
+          business: {
+            ...business,
+            name: document.getElementById('cfg-biz-name').value,
+            googleReviewUrl: document.getElementById('cfg-review-url').value,
+            locality: document.getElementById('cfg-locality').value,
+            fullAddress: document.getElementById('cfg-full-address').value
+          }
+        };
+        const blob = new Blob([JSON.stringify(updatedConfig, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'business.json';
+        a.click();
+      });
+
+      // Download Reviews
+      document.getElementById('btn-download-reviews').addEventListener('click', () => {
+        const blob = new Blob([JSON.stringify(reviews, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'reviews.json';
+        a.click();
+      });
+    });
+
+    function copyReplyText(index) {
+      const text = document.getElementById(`reply-text-${index}`).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('✓ Reply text copied to clipboard!');
+      });
+    }
+  </script>
+</body>
+</html>

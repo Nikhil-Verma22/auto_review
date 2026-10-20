@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Printable QR Standee & Dual-Sided NFC Card Studio — Pink City Gems</title>
+  <meta name="description" content="Generate, customize, and print 4x6 countertop standees and dual-sided CR80 NFC cards for Pink City Gems.">
+  <link rel="stylesheet" href="./assets/style.css">
+  <style>
+    .download-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .btn-download-asset {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-download-asset:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: #60a5fa;
+      color: #93c5fd;
+    }
+    .instructions-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-top: 24px;
+    }
+    .inst-step {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+    .inst-step-num {
+      width: 24px;
+      height: 24px;
+      background: #2563eb;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+
+  <div class="studio-container">
+    <!-- Studio Header -->
+    <header class="no-print" style="text-align: center; margin-bottom: 30px;">
+      <a href="./index.html" style="color: #60a5fa; text-decoration: none; font-size: 13px; font-weight: 600;">
+        ← Back to Mobile Review App
+      </a>
+      <h1 class="business-name" style="margin-top: 10px; font-size: 32px;">Printable QR Standee & NFC Card Studio</h1>
+      <p style="color: var(--text-muted); font-size: 14px; max-width: 620px; margin: 8px auto 0 auto;">
+        Deploy high-converting physical review touchpoints for Pink City Gems. Print 4×6" countertop acrylic standees and write NFC tap cards in seconds.
+      </p>
+    </header>
+
+    <div class="studio-grid">
+      <!-- Left Column: NFC & Asset Download Hub -->
+      <div class="hub-card no-print">
+        <h2 style="font-family: var(--font-heading); font-size: 18px; color: #ffffff; margin-bottom: 6px;">
+          📲 NFC Card Configuration
+        </h2>
+        <p style="font-size: 13px; color: var(--text-muted);">
+          Write this exact URL to your blank NTAG213 / NTAG215 card or sticker:
+        </p>
+
+        <div class="nfc-url-box">
+          <span id="nfc-url-text">https://nikhil-verma22.github.io/auto_review/</span>
+          <button class="btn-copy-url" id="btn-copy-nfc">📋 Copy URL</button>
+        </div>
+
+        <h2 style="font-family: var(--font-heading); font-size: 18px; color: #ffffff; margin-top: 24px; margin-bottom: 6px;">
+          📥 Download QR Assets
+        </h2>
+        <p style="font-size: 13px; color: var(--text-muted);">
+          Vector and high-resolution files pre-encoded with your target URL:
+        </p>
+
+        <div class="download-grid">
+          <a href="./assets/qr-code.png" download="pink-city-gems-qr-1024.png" class="btn-download-asset">
+            <span>🖼️ PNG (1024×1024)</span>
+          </a>
+          <a href="./assets/qr-code.svg" download="pink-city-gems-qr.svg" class="btn-download-asset">
+            <span>📐 Vector SVG</span>
+          </a>
+        </div>
+
+        <!-- 10-Second NFC Writing Guide -->
+        <div class="instructions-card">
+          <h3 style="font-size: 14px; font-weight: 700; color: #38bdf8; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+            <span>⚡ 10-Second NFC Card Setup</span>
+          </h3>
+          <div class="inst-step">
+            <div class="inst-step-num">1</div>
+            <div>Download the free <strong>NFC Tools</strong> app from Google Play Store or Apple App Store.</div>
+          </div>
+          <div class="inst-step">
+            <div class="inst-step-num">2</div>
+            <div>Open app → Tap <strong>Write</strong> → Tap <strong>Add a record</strong> → Select <strong>URL / URI</strong>.</div>
+          </div>
+          <div class="inst-step">
+            <div class="inst-step-num">3</div>
+            <div>Paste your NFC URL (<code style="color: #93c5fd;">https://nikhil-verma22.github.io/auto_review/</code>) → Tap <strong>OK</strong>.</div>
+          </div>
+          <div class="inst-step">
+            <div class="inst-step-num">4</div>
+            <div>Tap <strong>Write / 28 Bytes</strong> → Touch your blank NFC card/standee to the back of your phone. Done!</div>
+          </div>
+        </div>
+
+        <!-- Print Action -->
+        <button class="btn-print-studio" id="btn-print" style="width: 100%; justify-content: center; margin-top: 24px;">
+          🖨️ Print Countertop Standee (4×6")
+        </button>
+      </div>
+
+      <!-- Right Column: Interactive Standee & Card Previews -->
+      <div class="hub-card printable-target">
+        <div class="no-print" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h2 style="font-family: var(--font-heading); font-size: 18px; color: #ffffff;">
+            🪧 Physical Standee Preview (4×6")
+          </h2>
+          <span style="font-size: 11px; background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 4px 10px; border-radius: 20px; font-weight: 600;">
+            Print Ready
+          </span>
+        </div>
+
+        <!-- 4x6 Countertop Acrylic Standee Frame -->
+        <div class="standee-preview-wrap">
+          <div class="standee-frame" id="standee-print-area">
+            <div>
+              <div class="standee-header-badge">AI-Powered SMART CONNECT</div>
+              <div class="standee-biz-name" id="standee-name">PINK CITY GEMS</div>
+              <div class="standee-biz-sub" id="standee-sub">Certified Gemstone Dealer • Sector 23-C, Chandigarh</div>
+              <div class="standee-stars">★★★★★</div>
+            </div>
+
+            <!-- Crisp QR Code Centerpiece -->
+            <div>
+              <div class="standee-qr-box">
+                <img src="./assets/qr-code.svg" alt="Pink City Gems Google Review QR Code" id="standee-qr-img">
+              </div>
+              <div class="standee-cta-heading" style="margin-top: 10px;">
+                Scan with Phone Camera
+              </div>
+              <div class="standee-nfc-tagline">
+                <span>⚡ Or Tap Your Phone Here (NFC)</span>
+              </div>
+            </div>
+
+            <!-- Footer Micro Steps -->
+            <div>
+              <div class="standee-microsteps">
+                <div>1. Scan or Tap</div>
+                <div>•</div>
+                <div>2. Pick Category</div>
+                <div>•</div>
+                <div>3. 5★ Review</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CR80 NFC Tap Card Mockup -->
+        <div class="no-print" style="margin-top: 30px;">
+          <h2 style="font-family: var(--font-heading); font-size: 16px; color: #ffffff; margin-bottom: 12px; text-align: center;">
+            💳 Dual-Sided Smart NFC Tap Card (CR80)
+          </h2>
+
+          <div style="display: flex; flex-direction: column; gap: 16px; align-items: center;">
+            <!-- Front of Card -->
+            <div class="nfc-card-frame">
+              <div class="nfc-card-front-top">
+                <span style="font-weight: 800; font-size: 14px; letter-spacing: 0.5px;">PINK CITY GEMS</span>
+                <span class="nfc-symbol">📶</span>
+              </div>
+              <div style="text-align: center;">
+                <div style="font-size: 18px; font-weight: 800; font-family: var(--font-heading);">
+                  TAP TO REVIEW
+                </div>
+                <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">
+                  Vedic Rashi Ratna & Certified Gemstones
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b;">
+                <span>Sector 23-C, Chandigarh</span>
+                <span>★★★★★ 5.0 Google</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./assets/data-bundle.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const data = window.SMART_CONNECT_DATA;
+      if (data && data.business) {
+        const url = data.business.targetUrl || window.location.href.replace(/standee\.html.*/, '');
+        document.getElementById('nfc-url-text').textContent = url;
+        if (data.business.name) {
+          document.getElementById('standee-name').textContent = data.business.name.toUpperCase();
+        }
+        if (data.business.locality) {
+          document.getElementById('standee-sub').textContent = `Certified Gemstone Dealer • ${data.business.locality}`;
+        }
+      }
+
+      // 1-Click Copy NFC URL
+      const btnCopy = document.getElementById('btn-copy-nfc');
+      btnCopy.addEventListener('click', () => {
+        const text = document.getElementById('nfc-url-text').textContent.trim();
+        navigator.clipboard.writeText(text).then(() => {
+          btnCopy.textContent = '✓ Copied!';
+          btnCopy.style.background = '#10b981';
+          setTimeout(() => {
+            btnCopy.textContent = '📋 Copy URL';
+            btnCopy.style.background = '';
+          }, 2000);
+        });
+      });
+
+      // Print button
+      document.getElementById('btn-print').addEventListener('click', () => {
+        window.print();
+      });
+    });
+  </script>
+</body>
+</html>

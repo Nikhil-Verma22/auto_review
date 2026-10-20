@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Pink City Gems — 1-Tap Google Reviews & Star Feedback</title>
+  <meta name="description" content="Share your 5-star experience with Pink City Gems in Sector 23 Chandigarh. Select a category, copy your review, and rate us on Google in 1 tap!">
+  <meta name="theme-color" content="#090d16">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Design System & Styles -->
+  <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+  <!-- Ambient background lighting -->
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+
+  <main class="app-container">
+    <!-- Header Hero -->
+    <header class="header-hero">
+      <div class="verified-pill">
+        <span class="pulse-dot"></span>
+        <span>Google Verified Partner • 5.0 ★</span>
+      </div>
+
+      <h1 class="business-name" id="biz-name">Pink City Gems</h1>
+      <div class="business-locality" id="biz-locality">
+        📍 Sector 23-C, Chandigarh
+      </div>
+
+      <div class="stars-rating-bar">
+        <span>★★★★★</span>
+        <span class="rating-text">4.9 • 150+ Reviews</span>
+      </div>
+    </header>
+
+    <!-- 3-Step Micro Guide -->
+    <section class="steps-card" aria-label="How to review">
+      <div class="steps-title">
+        <span>⚡ 3-Second Quick Review</span>
+      </div>
+      <div class="steps-grid">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-text">Pick Category</div>
+          <div class="step-subtext">Find your item</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-text">Tap Copy & Post</div>
+          <div class="step-subtext">1-Click clipboard</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-text">5★ on Google</div>
+          <div class="step-subtext">Paste & submit</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Category Pills Filter -->
+    <nav class="categories-nav" aria-label="Review Categories">
+      <div class="categories-scroll" id="categories-container">
+        <!-- Injected via JavaScript -->
+      </div>
+    </nav>
+
+    <!-- Feed Header -->
+    <div class="feed-header">
+      <span class="feed-title">Select & Copy a Review:</span>
+      <span class="feed-counter" id="review-count-badge">Loading reviews...</span>
+    </div>
+
+    <!-- Review Cards Feed -->
+    <section class="reviews-list" id="reviews-feed" aria-label="Customer Reviews">
+      <!-- Injected via JavaScript -->
+    </section>
+
+    <!-- Built-in Testing Bar (Footer) -->
+    <footer class="test-bar-container">
+      <div class="test-bar-header">
+        <label class="test-toggle-label">
+          <input type="checkbox" id="test-mode-toggle">
+          <span>🧪 Test Mode (Owner Sandbox)</span>
+        </label>
+        <span style="font-size: 11px; color: var(--text-dim);">v1.0.0</span>
+      </div>
+      <div class="test-actions-panel" id="test-actions-panel">
+        <p style="margin-bottom: 8px; color: #94a3b8;">
+          Test Mode allows you to preview reviews, test clipboard copying without losing cards, and reset local history.
+        </p>
+        <button class="btn-test-action" id="btn-toggle-redirect">⏸️ Pause Auto-Redirect</button>
+        <button class="btn-test-action" id="btn-reset-copied">🔄 Reset My Copied Reviews</button>
+        <a href="./admin.html" class="btn-test-action" style="text-decoration: none; display: inline-block;">⚙️ Open Admin Hub</a>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Animated Copy & Redirect Modal -->
+  <div class="copy-modal-overlay" id="copy-modal" role="dialog" aria-modal="true">
+    <div class="copy-modal-card">
+      <div class="modal-icon-check">✓</div>
+      <h2 class="modal-title">Review Copied!</h2>
+      <p class="modal-desc">
+        Your review has been saved to your clipboard. Opening Google Reviews right now...
+      </p>
+      <div class="modal-stars-reminder">
+        Tap 5 Stars ★★★★★ & Paste
+      </div>
+      <div class="redirect-spinner-bar">
+        <div class="redirect-spinner-fill" id="modal-progress"></div>
+      </div>
+      <div class="redirect-status-text">Redirecting to Google in 1.2s...</div>
+    </div>
+  </div>
+
+  <!-- Pre-bundled Data and Logic -->
+  <script src="./assets/data-bundle.js"></script>
+  <script src="./assets/app.js"></script>
+</body>
+</html>

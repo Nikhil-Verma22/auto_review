@@ -1,0 +1,75 @@
+name: Deploy Smart CONNECT QR to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Generate QR Code Assets & Data Bundle
+        run: node scripts/generate_qr_assets.mjs
+
+      - name: Commit Generated Assets (if changed)
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          if [[ -n $(git status --porcelain public/assets/ data/ config/) ]]; then
+            git add public/assets/ data/ config/
+            git commit -m "chore(assets): auto-regenerate QR assets and data bundle [skip ci]"
+            git push origin main
+          else
+            echo "No asset changes to commit."
+          fi
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'public'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Write Step Summary
+        run: |
+          echo "### 🚀 Smart CONNECT QR System Deployed Successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Resource | URL |" >> $GITHUB_STEP_SUMMARY
+          echo "| :--- | :--- |" >> $GITHUB_STEP_SUMMARY
+          echo "| **🔗 Live NFC & Review URL** | [https://nikhil-verma22.github.io/auto_review/](https://nikhil-verma22.github.io/auto_review/) |" >> $GITHUB_STEP_SUMMARY
+          echo "| **🖨️ Printable QR Standee & NFC Studio** | [https://nikhil-verma22.github.io/auto_review/standee.html](https://nikhil-verma22.github.io/auto_review/standee.html) |" >> $GITHUB_STEP_SUMMARY
+          echo "| **⚙️ Owner Admin & AI Reply Studio** | [https://nikhil-verma22.github.io/auto_review/admin.html](https://nikhil-verma22.github.io/auto_review/admin.html) |" >> $GITHUB_STEP_SUMMARY
+          echo "| **🖼️ High-Res QR Code PNG** | [https://nikhil-verma22.github.io/auto_review/assets/qr-code.png](https://nikhil-verma22.github.io/auto_review/assets/qr-code.png) |" >> $GITHUB_STEP_SUMMARY
+          echo "| **📐 Vector QR Code SVG** | [https://nikhil-verma22.github.io/auto_review/assets/qr-code.svg](https://nikhil-verma22.github.io/auto_review/assets/qr-code.svg) |" >> $GITHUB_STEP_SUMMARY

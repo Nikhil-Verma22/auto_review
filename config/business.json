@@ -1,0 +1,104 @@
+{
+  "business": {
+    "name": "Pink City Gems",
+    "legalName": "Pink City Gems (Gemstone Dealer)",
+    "subtitle": "Certified Gemstone Dealer & Astrological Stones",
+    "tagline": "100% Certified Natural Gemstones, Vedic Rashi Ratna & Healing Crystals",
+    "locality": "Sector 23-C, Chandigarh",
+    "city": "Chandigarh",
+    "state": "Chandigarh",
+    "pincode": "160023",
+    "fullAddress": "SCO-27 (Back Side Entry), Sector 23-C, Chandigarh, 160023",
+    "phone": "+91 98888 88888",
+    "googleMapsUrl": "https://maps.app.goo.gl/7c9JDM7iPRyp6sB57",
+    "googleReviewUrl": "https://maps.google.com/?cid=9732890204388975020",
+    "cid": "9732890204388975020",
+    "placeId": "",
+    "writeReviewCustomUrl": "",
+    "repoUrl": "https://github.com/Nikhil-Verma22/auto_review",
+    "targetUrl": "https://nikhil-verma22.github.io/auto_review/",
+    "standeeUrl": "https://nikhil-verma22.github.io/auto_review/standee.html",
+    "adminUrl": "https://nikhil-verma22.github.io/auto_review/admin.html",
+    "rating": 5.0,
+    "totalReviewsDisplay": "4.9 ★ (150+ Verified Reviews)"
+  },
+  "categories": [
+    {
+      "id": "certified-gemstones",
+      "name": "Natural Gemstones",
+      "fullName": "💎 Certified Natural Gemstones",
+      "icon": "💎",
+      "badge": "Top Choice",
+      "description": "Original Ceylon Pukhraj, Zambian Emerald (Panna), Burma Ruby (Manik) & Blue Sapphire (Neelam)",
+      "keywords": [
+        "original pukhraj in chandigarh",
+        "certified gemstone dealer chandigarh",
+        "natural emerald panna sector 23",
+        "burma ruby manik price chandigarh",
+        "ceylon yellow sapphire",
+        "neelam blue sapphire",
+        "natural gemstone shop"
+      ]
+    },
+    {
+      "id": "astrological-consultation",
+      "name": "Astrological Ratna",
+      "fullName": "🪐 Astrological & Rashi Ratna",
+      "icon": "🪐",
+      "badge": "Vedic Vedic",
+      "description": "Planetary energized gemstones suited for your Kundali, Rashi & astrological benefits",
+      "keywords": [
+        "astrological gemstone consultation chandigarh",
+        "rashi ratna dealer sector 23",
+        "birthstone recommendation",
+        "energized astrological stones",
+        "best gemstone shop for kundali"
+      ]
+    },
+    {
+      "id": "healing-crystals",
+      "name": "Healing Crystals",
+      "fullName": "✨ Healing Crystals & Rudraksha",
+      "icon": "✨",
+      "badge": "Popular",
+      "description": "Original Himalayan Rudraksha beads, Amethyst, Rose Quartz, Pyramids & Chakra bracelets",
+      "keywords": [
+        "crystal healing bracelets chandigarh",
+        "authentic rudraksha beads",
+        "amethyst raw stone",
+        "reiki crystal pyramid chandigarh",
+        "energy cleansing crystals"
+      ]
+    },
+    {
+      "id": "custom-jewelry",
+      "name": "Custom Rings",
+      "fullName": "💍 Custom Rings & Astrological Pendants",
+      "icon": "💍",
+      "badge": "Artisan Crafted",
+      "description": "Handcrafted silver, gold & panchdhatu astrological rings and custom pendants",
+      "keywords": [
+        "astrological ring maker chandigarh",
+        "silver pukhraj ring sector 23",
+        "panchdhatu rashi ring design",
+        "custom gemstone pendant",
+        "certified gold gemstone setting"
+      ]
+    },
+    {
+      "id": "wholesale-pricing",
+      "name": "Wholesale & Lab Verified",
+      "fullName": "📜 Wholesale & Lab Certification",
+      "icon": "📜",
+      "badge": "100% Genuine",
+      "description": "Direct wholesale pricing with Govt / Reputed Gemological Lab authenticity certificates",
+      "keywords": [
+        "lab certified gemstones chandigarh",
+        "wholesale gemstone dealer sector 23",
+        "genuine gemstone certificate",
+        "best gemstone prices tricity",
+        "authentic gemstone testing"
+      ]
+    }
+  ]
+}

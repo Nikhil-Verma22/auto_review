@@ -1,0 +1,28 @@
+name: Auto-Reply to Google Business Reviews
+
+on:
+  schedule:
+    - cron: '0 6 * * *' # Runs daily at 06:00 UTC (11:30 AM IST)
+  workflow_dispatch:
+
+jobs:
+  auto-reply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Poll Google Reviews & Post SEO Replies
+        env:
+          GOOGLE_BUSINESS_ACCOUNT_ID: ${{ secrets.GOOGLE_BUSINESS_ACCOUNT_ID }}
+          GOOGLE_BUSINESS_ACCESS_TOKEN: ${{ secrets.GOOGLE_BUSINESS_ACCESS_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/auto_reply_reviews.mjs

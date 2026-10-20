@@ -1,0 +1,25 @@
+{
+  "name": "auto-review-smart-connect",
+  "version": "1.0.0",
+  "description": "Smart CONNECT QR - Zero-Effort SEO Google Review & Auto-Reply System for Pink City Gems",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/generate_qr_assets.mjs",
+    "replenish": "node scripts/replenish_reviews.mjs",
+    "auto-reply": "node scripts/auto_reply_reviews.mjs",
+    "test": "node scripts/generate_qr_assets.mjs"
+  },
+  "keywords": [
+    "google-reviews",
+    "seo",
+    "nfc",
+    "qr-code",
+    "smart-connect",
+    "pink-city-gems"
+  ],
+  "author": "Nikhil Verma",
+  "license": "MIT",
+  "dependencies": {
+    "qrcode": "^1.5.4"
+  }
+}
