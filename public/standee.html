@@ -3,10 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Printable QR Standee & Dual-Sided NFC Card Studio — Pink City Gems</title>
-  <meta name="description" content="Generate, customize, and print 4x6 countertop standees and dual-sided CR80 NFC cards for Pink City Gems.">
+  <title>Universal Google Maps Review Link & Printable Standee Studio</title>
+  <meta name="description" content="Paste any Google Maps link to instantly generate a direct Google Review link, printable 4x6 countertop standee, and NFC card URL.">
   <link rel="stylesheet" href="./assets/style.css">
   <style>
+    .generator-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(37, 99, 235, 0.15);
+    }
+    .generator-input-row {
+      display: flex;
+      gap: 10px;
+      margin: 14px 0 10px 0;
+      flex-wrap: wrap;
+    }
+    .gen-input {
+      flex: 1;
+      min-width: 260px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: var(--radius-sm);
+      color: #ffffff;
+      font-size: 14px;
+      padding: 12px 14px;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .gen-input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    }
+    .btn-gen {
+      background: var(--btn-gradient);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 12px 22px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-gen:hover {
+      background: var(--btn-gradient-hover);
+      transform: translateY(-1px);
+    }
+    .btn-gen:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .resolved-box {
+      display: none;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-top: 16px;
+      animation: fadeIn 0.3s ease;
+    }
+    .resolved-box.active {
+      display: block;
+    }
+    .resolved-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      font-size: 13px;
+      color: #cbd5e1;
+    }
+    @media (min-width: 600px) {
+      .resolved-grid {
+        grid-template-columns: auto 1fr;
+        align-items: center;
+      }
+    }
+    .resolved-label {
+      font-weight: 700;
+      color: #94a3b8;
+    }
+    .resolved-val {
+      color: #ffffff;
+      font-weight: 600;
+      word-break: break-all;
+    }
     .download-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -26,6 +115,7 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
+      cursor: pointer;
       transition: all 0.2s;
     }
     .btn-download-asset:hover {
@@ -61,6 +151,13 @@
       font-size: 11px;
       flex-shrink: 0;
     }
+    .pulse-spin {
+      display: inline-block;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
@@ -69,15 +166,86 @@
 
   <div class="studio-container">
     <!-- Studio Header -->
-    <header class="no-print" style="text-align: center; margin-bottom: 30px;">
+    <header class="no-print" style="text-align: center; margin-bottom: 24px;">
       <a href="./index.html" style="color: #60a5fa; text-decoration: none; font-size: 13px; font-weight: 600;">
-        ← Back to Mobile Review App
+        ← Open Mobile Review Page
       </a>
-      <h1 class="business-name" style="margin-top: 10px; font-size: 32px;">Printable QR Standee & NFC Card Studio</h1>
-      <p style="color: var(--text-muted); font-size: 14px; max-width: 620px; margin: 8px auto 0 auto;">
-        Deploy high-converting physical review touchpoints for Pink City Gems. Print 4×6" countertop acrylic standees and write NFC tap cards in seconds.
+      <h1 class="business-name" style="margin-top: 10px; font-size: 32px;">
+        Universal Google Review Link & Standee Studio
+      </h1>
+      <p style="color: var(--text-muted); font-size: 14px; max-width: 680px; margin: 8px auto 0 auto;">
+        Works for <strong>ANY business on Google Maps</strong>. Paste any Google Maps share URL to extract the direct review link, update the live countertop standee, and program your NFC card.
       </p>
     </header>
+
+    <!-- Universal Google Maps Link Generator Card -->
+    <section class="generator-card no-print" aria-label="Universal Generator">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <h2 style="font-family: var(--font-heading); font-size: 18px; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+          <span>🌐 Generate Review Link for ANY Business</span>
+        </h2>
+        <span style="font-size: 12px; color: #34d399; font-weight: 600;">
+          Works with maps.app.goo.gl & all Google Maps links
+        </span>
+      </div>
+
+      <div class="generator-input-row">
+        <input 
+          type="text" 
+          id="input-maps-url" 
+          class="gen-input" 
+          placeholder="Paste Google Maps link: https://maps.app.goo.gl/... or https://www.google.com/maps/place/..."
+        >
+        <button id="btn-resolve" class="btn-gen">
+          <span>⚡ Generate Link & Standee</span>
+        </button>
+      </div>
+
+      <div style="display: flex; gap: 10px; align-items: center; margin-top: 4px; font-size: 12px; color: var(--text-dim); flex-wrap: wrap;">
+        <span>Quick examples:</span>
+        <button id="btn-sample-pink" style="background: none; border: none; color: #60a5fa; text-decoration: underline; cursor: pointer; padding: 0;">
+          Load Pink City Gems Link
+        </button>
+      </div>
+
+      <!-- Live Error Notice -->
+      <div id="gen-error" style="display: none; color: #f87171; font-size: 13px; margin-top: 10px; padding: 10px; background: rgba(239, 68, 68, 0.1); border-radius: 6px; border: 1px solid rgba(239, 68, 68, 0.3);"></div>
+
+      <!-- Live Resolved Information Card -->
+      <div class="resolved-box" id="resolved-box">
+        <div style="font-size: 14px; font-weight: 700; color: #34d399; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+          <span>✓ Google Review Link Successfully Generated!</span>
+        </div>
+        <div class="resolved-grid">
+          <div class="resolved-label">🏢 Business Name:</div>
+          <div class="resolved-val" id="res-biz-name">PINK CITY GEMS</div>
+
+          <div class="resolved-label">📍 Place ID:</div>
+          <div class="resolved-val" id="res-place-id">ChIJdSHXX7ztDzkRrOF75hIsEoc</div>
+
+          <div class="resolved-label">⭐ Direct Review Link:</div>
+          <div class="resolved-val">
+            <a id="res-review-link" href="#" target="_blank" style="color: #60a5fa; text-decoration: underline;">
+              https://search.google.com/local/writereview?placeid=...
+            </a>
+          </div>
+
+          <div class="resolved-label">📲 NFC & QR Target URL:</div>
+          <div class="resolved-val" id="res-target-url" style="color: #a78bfa;">
+            https://nikhil-verma22.github.io/auto_review/
+          </div>
+        </div>
+
+        <div style="margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap;">
+          <a id="btn-test-experience" href="./index.html" target="_blank" class="btn-copy-url" style="text-decoration: none; padding: 8px 16px; font-size: 13px; background: #10b981;">
+            📱 Test Mobile Review Flow
+          </a>
+          <button id="btn-apply-as-default" class="btn-copy-url" style="background: rgba(255, 255, 255, 0.1); padding: 8px 16px; font-size: 13px;">
+            💾 Save As Active Business
+          </button>
+        </div>
+      </div>
+    </section>
 
     <div class="studio-grid">
       <!-- Left Column: NFC & Asset Download Hub -->
@@ -86,7 +254,7 @@
           📲 NFC Card Configuration
         </h2>
         <p style="font-size: 13px; color: var(--text-muted);">
-          Write this exact URL to your blank NTAG213 / NTAG215 card or sticker:
+          Write this exact URL to your physical NFC card/tag:
         </p>
 
         <div class="nfc-url-box">
@@ -98,16 +266,16 @@
           📥 Download QR Assets
         </h2>
         <p style="font-size: 13px; color: var(--text-muted);">
-          Vector and high-resolution files pre-encoded with your target URL:
+          Dynamically generated vector and high-resolution files:
         </p>
 
         <div class="download-grid">
-          <a href="./assets/qr-code.png" download="pink-city-gems-qr-1024.png" class="btn-download-asset">
-            <span>🖼️ PNG (1024×1024)</span>
-          </a>
-          <a href="./assets/qr-code.svg" download="pink-city-gems-qr.svg" class="btn-download-asset">
-            <span>📐 Vector SVG</span>
-          </a>
+          <button class="btn-download-asset" id="btn-dl-png">
+            <span>🖼️ Download PNG (1024×1024)</span>
+          </button>
+          <button class="btn-download-asset" id="btn-dl-svg">
+            <span>📐 Download SVG</span>
+          </button>
         </div>
 
         <!-- 10-Second NFC Writing Guide -->
@@ -125,7 +293,7 @@
           </div>
           <div class="inst-step">
             <div class="inst-step-num">3</div>
-            <div>Paste your NFC URL (<code style="color: #93c5fd;">https://nikhil-verma22.github.io/auto_review/</code>) → Tap <strong>OK</strong>.</div>
+            <div>Paste your copied NFC Target URL → Tap <strong>OK</strong>.</div>
           </div>
           <div class="inst-step">
             <div class="inst-step-num">4</div>
@@ -156,14 +324,14 @@
             <div>
               <div class="standee-header-badge">AI-Powered SMART CONNECT</div>
               <div class="standee-biz-name" id="standee-name">PINK CITY GEMS</div>
-              <div class="standee-biz-sub" id="standee-sub">Certified Gemstone Dealer • Sector 23-C, Chandigarh</div>
+              <div class="standee-biz-sub" id="standee-sub">Google Verified Business • 5.0 ★</div>
               <div class="standee-stars">★★★★★</div>
             </div>
 
             <!-- Crisp QR Code Centerpiece -->
             <div>
               <div class="standee-qr-box">
-                <img src="./assets/qr-code.svg" alt="Pink City Gems Google Review QR Code" id="standee-qr-img">
+                <img src="./assets/qr-code.svg" alt="Google Review QR Code" id="standee-qr-img">
               </div>
               <div class="standee-cta-heading" style="margin-top: 10px;">
                 Scan with Phone Camera
@@ -178,9 +346,9 @@
               <div class="standee-microsteps">
                 <div>1. Scan or Tap</div>
                 <div>•</div>
-                <div>2. Pick Category</div>
+                <div>2. Pick 5★ Review</div>
                 <div>•</div>
-                <div>3. 5★ Review</div>
+                <div>3. Paste on Google</div>
               </div>
             </div>
           </div>
@@ -196,19 +364,19 @@
             <!-- Front of Card -->
             <div class="nfc-card-frame">
               <div class="nfc-card-front-top">
-                <span style="font-weight: 800; font-size: 14px; letter-spacing: 0.5px;">PINK CITY GEMS</span>
+                <span style="font-weight: 800; font-size: 14px; letter-spacing: 0.5px;" id="nfc-card-title">PINK CITY GEMS</span>
                 <span class="nfc-symbol">📶</span>
               </div>
               <div style="text-align: center;">
                 <div style="font-size: 18px; font-weight: 800; font-family: var(--font-heading);">
                   TAP TO REVIEW
                 </div>
-                <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">
-                  Vedic Rashi Ratna & Certified Gemstones
+                <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;" id="nfc-card-sub">
+                  Verified Google Business
                 </div>
               </div>
               <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b;">
-                <span>Sector 23-C, Chandigarh</span>
+                <span id="nfc-card-loc">Sector 23-C, Chandigarh</span>
                 <span>★★★★★ 5.0 Google</span>
               </div>
             </div>
@@ -218,32 +386,183 @@
     </div>
   </div>
 
+  <!-- Client QR Library, Google Maps Resolver & App Scripts -->
+  <script src="./assets/qrcode.min.js"></script>
+  <script src="./assets/google-maps-resolver.js"></script>
   <script src="./assets/data-bundle.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      let currentBizName = 'Pink City Gems';
+      let currentPlaceId = 'ChIJdSHXX7ztDzkRrOF75hIsEoc';
+      let currentGoogleReviewUrl = 'https://search.google.com/local/writereview?placeid=ChIJdSHXX7ztDzkRrOF75hIsEoc';
+      let currentTargetUrl = window.location.origin + window.location.pathname.replace('standee.html', '');
+
+      // Load initial from data bundle
       const data = window.SMART_CONNECT_DATA;
       if (data && data.business) {
-        const url = data.business.targetUrl || window.location.href.replace(/standee\.html.*/, '');
-        document.getElementById('nfc-url-text').textContent = url;
-        if (data.business.name) {
-          document.getElementById('standee-name').textContent = data.business.name.toUpperCase();
-        }
-        if (data.business.locality) {
-          document.getElementById('standee-sub').textContent = `Certified Gemstone Dealer • ${data.business.locality}`;
+        currentBizName = data.business.name || currentBizName;
+        currentPlaceId = data.business.placeId || currentPlaceId;
+        currentGoogleReviewUrl = data.business.googleReviewUrl || currentGoogleReviewUrl;
+      }
+
+      // Check saved custom business from localStorage
+      const savedBiz = localStorage.getItem('smart_connect_custom_biz');
+      if (savedBiz) {
+        try {
+          const parsed = JSON.parse(savedBiz);
+          currentBizName = parsed.name || currentBizName;
+          currentPlaceId = parsed.placeId || currentPlaceId;
+          currentGoogleReviewUrl = parsed.googleReviewUrl || currentGoogleReviewUrl;
+        } catch(e) {}
+      }
+
+      updateUI();
+
+      // UI Update Function
+      function updateUI() {
+        const isDefault = currentBizName.toLowerCase().includes('pink city');
+        const baseUrl = window.location.origin + window.location.pathname.replace('standee.html', '');
+        
+        currentTargetUrl = isDefault 
+          ? baseUrl 
+          : `${baseUrl}?biz=${encodeURIComponent(currentBizName)}&placeid=${encodeURIComponent(currentPlaceId)}`;
+
+        // Update Text Elements
+        document.getElementById('nfc-url-text').textContent = currentTargetUrl;
+        document.getElementById('standee-name').textContent = currentBizName.toUpperCase();
+        document.getElementById('nfc-card-title').textContent = currentBizName.toUpperCase();
+
+        // Update Resolver Result elements
+        document.getElementById('res-biz-name').textContent = currentBizName;
+        document.getElementById('res-place-id').textContent = currentPlaceId;
+        document.getElementById('res-review-link').textContent = currentGoogleReviewUrl;
+        document.getElementById('res-review-link').href = currentGoogleReviewUrl;
+        document.getElementById('res-target-url').textContent = currentTargetUrl;
+        document.getElementById('btn-test-experience').href = currentTargetUrl;
+
+        // Render QR Code in browser
+        if (window.QRCode && QRCode.toDataURL) {
+          QRCode.toDataURL(currentTargetUrl, {
+            width: 512,
+            margin: 1,
+            errorCorrectionLevel: 'H',
+            color: { dark: '#0f172a', light: '#ffffff' }
+          }, (err, url) => {
+            if (!err && url) {
+              document.getElementById('standee-qr-img').src = url;
+            }
+          });
         }
       }
+
+      // 1. Resolve Button Click
+      const btnResolve = document.getElementById('btn-resolve');
+      const inputMaps = document.getElementById('input-maps-url');
+      const errorBox = document.getElementById('gen-error');
+      const resolvedBox = document.getElementById('resolved-box');
+
+      btnResolve.addEventListener('click', handleResolve);
+      inputMaps.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') handleResolve();
+      });
+
+      async function handleResolve() {
+        const val = inputMaps.value.trim();
+        if (!val) {
+          showError('Please paste a Google Maps link or Place ID.');
+          return;
+        }
+
+        hideError();
+        btnResolve.disabled = true;
+        btnResolve.innerHTML = '<span class="pulse-spin">⚙️</span> Resolving Link...';
+
+        try {
+          const result = await window.GoogleMapsResolver.resolveGoogleMapsInput(val);
+          currentBizName = result.name || 'Google Business';
+          currentPlaceId = result.placeId;
+          currentGoogleReviewUrl = result.googleReviewUrl;
+
+          updateUI();
+          resolvedBox.classList.add('active');
+        } catch (err) {
+          showError(err.message || 'Could not resolve Google Maps URL.');
+        } finally {
+          btnResolve.disabled = false;
+          btnResolve.innerHTML = '<span>⚡ Generate Link & Standee</span>';
+        }
+      }
+
+      function showError(msg) {
+        errorBox.textContent = msg;
+        errorBox.style.display = 'block';
+      }
+
+      function hideError() {
+        errorBox.style.display = 'none';
+      }
+
+      // Sample link helper
+      document.getElementById('btn-sample-pink').addEventListener('click', () => {
+        inputMaps.value = 'https://maps.app.goo.gl/7c9JDM7iPRyp6sB57';
+        handleResolve();
+      });
+
+      // Save as active business button
+      document.getElementById('btn-apply-as-default').addEventListener('click', () => {
+        localStorage.setItem('smart_connect_custom_biz', JSON.stringify({
+          name: currentBizName,
+          placeId: currentPlaceId,
+          googleReviewUrl: currentGoogleReviewUrl
+        }));
+        alert(`✓ "${currentBizName}" saved as active business!`);
+      });
 
       // 1-Click Copy NFC URL
       const btnCopy = document.getElementById('btn-copy-nfc');
       btnCopy.addEventListener('click', () => {
-        const text = document.getElementById('nfc-url-text').textContent.trim();
-        navigator.clipboard.writeText(text).then(() => {
+        navigator.clipboard.writeText(currentTargetUrl).then(() => {
           btnCopy.textContent = '✓ Copied!';
           btnCopy.style.background = '#10b981';
           setTimeout(() => {
             btnCopy.textContent = '📋 Copy URL';
             btnCopy.style.background = '';
           }, 2000);
+        });
+      });
+
+      // Download PNG button
+      document.getElementById('btn-dl-png').addEventListener('click', () => {
+        QRCode.toDataURL(currentTargetUrl, {
+          width: 1024,
+          margin: 2,
+          errorCorrectionLevel: 'H',
+          color: { dark: '#0f172a', light: '#ffffff' }
+        }, (err, dataUrl) => {
+          if (!err) {
+            const a = document.createElement('a');
+            a.href = dataUrl;
+            a.download = `${currentBizName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-qr.png`;
+            a.click();
+          }
+        });
+      });
+
+      // Download SVG button
+      document.getElementById('btn-dl-svg').addEventListener('click', () => {
+        QRCode.toString(currentTargetUrl, {
+          type: 'svg',
+          margin: 2,
+          errorCorrectionLevel: 'H',
+          color: { dark: '#0f172a', light: '#ffffff' }
+        }, (err, svgString) => {
+          if (!err) {
+            const blob = new Blob([svgString], { type: 'image/svg+xml' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `${currentBizName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-qr.svg`;
+            a.click();
+          }
         });
       });
 

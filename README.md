@@ -34,23 +34,23 @@
 ```mermaid
 graph LR
     A[Customer Taps NFC / Scans QR] --> B[Instant Mobile Page Loads <50ms]
-    B --> C[Customer Selects Category]
-    C --> D[Taps 'Copy & Post Review']
+    B --> C[Customer Picks from 5 Ready 5★ Reviews]
+    C --> D[Taps Review Card / 'Copy & Open']
     D --> E[Review Text Copied to Clipboard]
-    E --> F[Auto-Redirects to Google Maps Review Dialog]
+    E --> F[Direct Google 'Write a Review' Dialog Opens]
     F --> G[Customer Taps 5 Stars & Pastes Review]
 ```
 
 1. **Tap or Scan**: Customer taps their phone against your NFC card or scans your countertop QR code.
 2. **Instant Mobile Experience (<50ms)**: Pre-bundled static architecture loads instantaneously with zero database or server latency.
-3. **5 Curated Categories**:
+3. **5 Curated Ready-to-Use 5★ Reviews**:
    - 💎 **Certified Natural Gemstones** (Ceylon Pukhraj, Zambian Emerald, Burma Ruby, Blue Sapphire)
    - 🪐 **Astrological & Rashi Ratna** (Vedic birthstone recommendations, energized planetary stones)
    - ✨ **Healing Crystals & Rudraksha** (Authentic Himalayan Rudraksha, Amethyst, Pyramids, Chakra bracelets)
    - 💍 **Custom Rings & Pendants** (Vedic open-back settings in gold, silver, and panchdhatu)
    - 📜 **Wholesale & Lab Certification** (Govt/IGI lab reports, wholesale pricing in Sector 23 Chandigarh)
-4. **Anti-Duplicate Shuffling**: Each review card is unique. Once copied on a phone, that review ID is saved to `localStorage` and never presented to that customer again. Reviews are randomized per scan so simultaneous customers at the counter get different suggestions.
-5. **1-Tap Clipboard Copy & Seamless Redirect**: Tapping *"Copy & Post Review"* copies the high-ranking local SEO text and automatically redirects to Google Maps review dialog in 1.2s.
+4. **Universal Generator for Any Business**: In `standee.html`, paste ANY Google Maps share link (`maps.app.goo.gl/...` or full URL) to dynamically generate the direct review link, live 4×6" standee, and custom NFC target URL!
+5. **1-Tap Clipboard Copy & Seamless Direct Dialog**: Tapping any review card copies the text and automatically opens the Google "Write a Review" dialog directly via its canonical Place ID (`ChIJ...`).
 
 ---
 

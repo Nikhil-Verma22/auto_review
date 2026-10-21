@@ -1,33 +1,38 @@
 /**
- * Pink City Gems — Smart CONNECT QR Client Engine
- * High-performance mobile client with instant loading, anti-duplicate rotation, and clipboard redirect.
+ * Smart CONNECT QR Client Engine
+ * 5-Ready Reviews Selection + Universal Dynamic Business & Google Write-a-Review Redirect
  */
 
 (function () {
   'use strict';
 
   // State
-  let currentCategory = 'all';
   let availableReviews = [];
   let testModeActive = false;
   let pauseRedirect = false;
+  let activeBusiness = {
+    name: 'Pink City Gems',
+    locality: 'Sector 23-C, Chandigarh',
+    googleReviewUrl: 'https://search.google.com/local/writereview?placeid=ChIJdSHXX7ztDzkRrOF75hIsEoc',
+    placeId: 'ChIJdSHXX7ztDzkRrOF75hIsEoc'
+  };
 
-  const STORAGE_KEY = 'smart_copied_reviews_v1';
+  const STORAGE_KEY = 'smart_copied_reviews_v2';
   const TEST_MODE_KEY = 'smart_connect_test_mode';
 
   // DOM Elements
   const bizNameEl = document.getElementById('biz-name');
   const bizLocalityEl = document.getElementById('biz-locality');
-  const categoriesContainer = document.getElementById('categories-container');
   const reviewsFeed = document.getElementById('reviews-feed');
   const reviewCountBadge = document.getElementById('review-count-badge');
   const modalOverlay = document.getElementById('copy-modal');
   const modalProgressBar = document.getElementById('modal-progress');
+  const modalPreviewText = document.getElementById('modal-preview-text');
+  const modalDirectBtn = document.getElementById('modal-direct-btn');
   const testModeToggle = document.getElementById('test-mode-toggle');
   const testActionsPanel = document.getElementById('test-actions-panel');
   const btnResetCopied = document.getElementById('btn-reset-copied');
   const btnToggleRedirect = document.getElementById('btn-toggle-redirect');
-  const testStatusNotice = document.getElementById('test-status-notice');
 
   // Load Data
   function getData() {
@@ -65,177 +70,175 @@
     }
   }
 
-  // Fisher-Yates array shuffle for unique per-session ordering
-  function shuffleArray(arr) {
-    const array = [...arr];
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+  // Generate 5 dynamic reviews for any external business
+  function generateGenericReviews(bizName) {
+    return [
+      {
+        id: 'rev_gen_1',
+        badge: '⭐ Premium Quality',
+        author: 'Rohit Sharma',
+        rating: 5,
+        text: `Exceptional quality and service at ${bizName}! The entire experience exceeded my expectations. Very prompt, welcoming, and professional.`
+      },
+      {
+        id: 'rev_gen_2',
+        badge: '🤝 Top Customer Care',
+        author: 'Priya Verma',
+        rating: 5,
+        text: `Outstanding customer care and great attention to detail. The team at ${bizName} is trustworthy, polite, and truly values their clients.`
+      },
+      {
+        id: 'rev_gen_3',
+        badge: '💯 Highly Recommended',
+        author: 'Amit Patel',
+        rating: 5,
+        text: `One of the finest establishments in the city! Transparent pricing, honest advice, and top-tier professionalism. Highly recommended to everyone.`
+      },
+      {
+        id: 'rev_gen_4',
+        badge: '✨ Great Experience',
+        author: 'Dr. Neha Gupta',
+        rating: 5,
+        text: `A completely smooth and hassle-free experience. ${bizName} sets the benchmark for reliability and dedication. 5 stars all the way!`
+      },
+      {
+        id: 'rev_gen_5',
+        badge: '🏆 Reliable & Trusted',
+        author: 'Rajesh Mehra',
+        rating: 5,
+        text: `Consistently reliable, fair, and high standard. I have recommended ${bizName} to my friends and family, and will definitely return!`
+      }
+    ];
   }
 
   // Initialize UI
   async function init() {
     const data = await getData();
-    if (!data) {
-      reviewsFeed.innerHTML = '<div class="empty-state"><div class="empty-icon">⚠️</div><h3>Unable to load reviews</h3><p>Please refresh the page or check connection.</p></div>';
-      return;
-    }
+    const defaultBiz = data?.business || activeBusiness;
 
-    const { business, categories, reviews } = data;
-
-    // Set business headers
-    if (bizNameEl) bizNameEl.textContent = business.name || 'Pink City Gems';
-    if (bizLocalityEl) {
-      bizLocalityEl.innerHTML = `📍 ${business.locality || 'Sector 23-C, Chandigarh'}`;
-    }
-
-    // Check URL parameters for category or test mode
+    // 1. Check URL parameters for any dynamic business
     const urlParams = new URLSearchParams(window.location.search);
-    const catParam = urlParams.get('cat');
+    const paramBiz = urlParams.get('biz');
+    const paramPlaceId = urlParams.get('placeid');
+    const paramLoc = urlParams.get('loc');
+    const paramReviewUrl = urlParams.get('reviewUrl');
+
+    if (paramPlaceId) {
+      activeBusiness.placeId = paramPlaceId;
+      activeBusiness.googleReviewUrl = `https://search.google.com/local/writereview?placeid=${encodeURIComponent(paramPlaceId)}`;
+    } else if (paramReviewUrl) {
+      activeBusiness.googleReviewUrl = paramReviewUrl;
+    } else {
+      activeBusiness.placeId = defaultBiz.placeId;
+      activeBusiness.googleReviewUrl = defaultBiz.googleReviewUrl;
+    }
+
+    if (paramBiz) {
+      activeBusiness.name = decodeURIComponent(paramBiz);
+      activeBusiness.locality = paramLoc ? decodeURIComponent(paramLoc) : 'Verified Google Business';
+    } else {
+      activeBusiness.name = defaultBiz.name || 'Pink City Gems';
+      activeBusiness.locality = defaultBiz.locality || 'Sector 23-C, Chandigarh';
+    }
+
+    // Update document title and header
+    document.title = `${activeBusiness.name} — Leave a 5★ Google Review`;
+    if (bizNameEl) bizNameEl.textContent = activeBusiness.name;
+    if (bizLocalityEl) bizLocalityEl.innerHTML = `📍 ${activeBusiness.locality}`;
+
+    // Test mode query check
     if (urlParams.get('test') === '1' || localStorage.getItem(TEST_MODE_KEY) === 'true') {
       testModeActive = true;
       if (testModeToggle) testModeToggle.checked = true;
       if (testActionsPanel) testActionsPanel.classList.add('active');
     }
 
-    // Render category filters
-    renderCategories(categories, catParam);
-
-    // Filter reviews (Anti-duplicate: exclude locally copied & globally claimed)
-    const locallyCopied = getCopiedReviewIds();
-    availableReviews = reviews.filter((r) => {
-      if (testModeActive) return true; // Show all when testing if desired
-      return !r.used && !locallyCopied.includes(r.id);
-    });
-
-    // Shuffle reviews so simultaneous visitors don't see identical top cards
-    availableReviews = shuffleArray(availableReviews);
-
-    // Render feed
-    filterAndRenderFeed();
-    updateCounterBadge();
-
-    // Setup event listeners
-    setupEventListeners(business);
-  }
-
-  // Render Category Filter Pills
-  function renderCategories(categories, defaultCat) {
-    if (!categoriesContainer) return;
-
-    categoriesContainer.innerHTML = '';
-
-    // "All Categories" pill
-    const allBtn = document.createElement('button');
-    allBtn.className = 'category-pill' + (!defaultCat || defaultCat === 'all' ? ' active' : '');
-    allBtn.id = 'pill-cat-all';
-    allBtn.innerHTML = '✨ All Categories';
-    allBtn.addEventListener('click', () => selectCategory('all'));
-    categoriesContainer.appendChild(allBtn);
-
-    // 5 Categories
-    categories.forEach((cat, idx) => {
-      const btn = document.createElement('button');
-      const isMatch = defaultCat === cat.id || defaultCat === String(idx + 1);
-      if (isMatch) currentCategory = cat.id;
-      btn.className = 'category-pill' + (isMatch ? ' active' : '');
-      btn.id = `pill-cat-${cat.id}`;
-      btn.innerHTML = `${cat.icon || '🏷️'} ${cat.name}`;
-      btn.title = cat.description;
-      btn.addEventListener('click', () => selectCategory(cat.id));
-      categoriesContainer.appendChild(btn);
-    });
-  }
-
-  // Handle category switch
-  function selectCategory(catId) {
-    currentCategory = catId;
-    const pills = categoriesContainer.querySelectorAll('.category-pill');
-    pills.forEach((p) => p.classList.remove('active'));
-
-    const activePill = document.getElementById(catId === 'all' ? 'pill-cat-all' : `pill-cat-${catId}`);
-    if (activePill) activePill.classList.add('active');
-
-    filterAndRenderFeed();
-  }
-
-  // Filter & Render Cards
-  function filterAndRenderFeed() {
-    let filtered = availableReviews;
-    if (currentCategory !== 'all') {
-      filtered = availableReviews.filter((r) => r.categoryId === currentCategory);
+    // 2. Load the 5 ready comments
+    if (paramBiz && paramBiz.toLowerCase() !== 'pink city gems') {
+      availableReviews = generateGenericReviews(activeBusiness.name);
+    } else {
+      // Use the 5 curated reviews for Pink City Gems
+      availableReviews = (data?.reviews && data.reviews.length >= 5) 
+        ? data.reviews.slice(0, 5) 
+        : generateGenericReviews(activeBusiness.name);
     }
 
-    if (filtered.length === 0) {
-      reviewsFeed.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-icon">🎉</div>
-          <h3>You're All Caught Up!</h3>
-          <p>You have reviewed our suggestions in this category. Tap below to write your custom review on Google Maps.</p>
-          <button id="btn-custom-review" class="btn-copy-post" style="margin-top: 16px;">
-            ⭐⭐⭐⭐⭐ Open Google Reviews
+    // Render the 5 review cards
+    renderReviewsFeed();
+
+    // Setup event listeners
+    setupEventListeners();
+  }
+
+  // Render exactly 5 clean cards + Write Custom Review action
+  function renderReviewsFeed() {
+    if (!reviewsFeed) return;
+
+    if (reviewCountBadge) {
+      reviewCountBadge.textContent = `${availableReviews.length} Ready Reviews`;
+    }
+
+    const cardsHTML = availableReviews.map((r, index) => {
+      const initials = r.author
+        .split(' ')
+        .map((n) => n[0])
+        .join('')
+        .substring(0, 2)
+        .toUpperCase();
+
+      const badge = r.badge || `Option #${index + 1}`;
+
+      return `
+        <div class="review-card" id="card-${r.id}" data-id="${r.id}" data-text="${encodeURIComponent(r.text)}">
+          <div class="card-top">
+            <div class="author-meta">
+              <div class="author-avatar">${initials}</div>
+              <div>
+                <div class="author-name">${r.author}</div>
+                <div class="author-sub">Verified Customer • 5.0 ★</div>
+              </div>
+            </div>
+            <span class="card-category-badge">${badge}</span>
+          </div>
+          <div class="card-stars">★★★★★</div>
+          <p class="card-text">"${r.text}"</p>
+          <button class="btn-copy-post" data-id="${r.id}" data-text="${encodeURIComponent(r.text)}" id="btn-copy-${r.id}">
+            <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            <span>Tap to Copy & Open Review Dialog</span>
           </button>
         </div>
       `;
-      const btnCustom = document.getElementById('btn-custom-review');
-      if (btnCustom) {
-        btnCustom.addEventListener('click', () => {
-          window.location.href = window.SMART_CONNECT_DATA?.business?.googleReviewUrl || 'https://search.google.com/local/writereview?placeid=ChIJdSHXX7ztDzkRrOF75hIsEoc';
-        });
-      }
-      return;
-    }
+    }).join('');
 
-    reviewsFeed.innerHTML = filtered.map((r) => createReviewCardHTML(r)).join('');
+    // Append custom review option at bottom
+    const customReviewHTML = `
+      <div style="margin-top: 10px; text-align: center;">
+        <button id="btn-custom-review-direct" class="btn-test-action" style="background: rgba(255, 255, 255, 0.05); border: 1px dashed rgba(255, 255, 255, 0.2); padding: 12px 20px; font-size: 13px; color: #93c5fd; width: 100%; border-radius: var(--radius-md);">
+          ✍️ Or Write Your Own Custom Review Directly on Google
+        </button>
+      </div>
+    `;
 
-    // Attach copy & post events to both the card and the button
+    reviewsFeed.innerHTML = cardsHTML + customReviewHTML;
+
+    // Attach click events
     reviewsFeed.querySelectorAll('.review-card').forEach((card) => {
-      card.addEventListener('click', (e) => {
+      card.addEventListener('click', () => {
         const reviewId = card.getAttribute('data-id');
         const reviewText = decodeURIComponent(card.getAttribute('data-text'));
         handleCopyAndPost(reviewId, reviewText);
       });
     });
+
+    const btnDirect = document.getElementById('btn-custom-review-direct');
+    if (btnDirect) {
+      btnDirect.addEventListener('click', () => {
+        window.location.href = activeBusiness.googleReviewUrl;
+      });
+    }
   }
 
-  // Create single card HTML
-  function createReviewCardHTML(r) {
-    const initials = r.author
-      .split(' ')
-      .map((n) => n[0])
-      .join('')
-      .substring(0, 2)
-      .toUpperCase();
-
-    // Category display name
-    const catMeta = window.SMART_CONNECT_DATA?.categories?.find((c) => c.id === r.categoryId);
-    const catBadge = catMeta ? `${catMeta.icon} ${catMeta.name}` : 'Verified Customer';
-
-    return `
-      <div class="review-card" id="card-${r.id}" data-id="${r.id}" data-text="${encodeURIComponent(r.text)}">
-        <div class="card-top">
-          <div class="author-meta">
-            <div class="author-avatar">${initials}</div>
-            <div>
-              <div class="author-name">${r.author}</div>
-              <div class="author-sub">Verified Buyer • Local Guide</div>
-            </div>
-          </div>
-          <span class="card-category-badge">${catBadge}</span>
-        </div>
-        <div class="card-stars">★★★★★</div>
-        <p class="card-text">"${r.text}"</p>
-        <button class="btn-copy-post" data-id="${r.id}" data-text="${encodeURIComponent(r.text)}" id="btn-copy-${r.id}">
-          <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-          <span>Tap to Copy & Post Review</span>
-        </button>
-      </div>
-    `;
-  }
-
-  // Handle Copy to Clipboard & Redirect
+  // Copy to clipboard & trigger direct Google Review popup
   function handleCopyAndPost(reviewId, text) {
     // 1. Copy to clipboard
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -244,22 +247,18 @@
       fallbackCopy(text);
     }
 
-    // 2. Mark as used in localStorage
+    // 2. Mark review as copied
     markReviewCopied(reviewId);
 
-    // 3. Update in-memory pool so it disappears on next reload
-    availableReviews = availableReviews.filter((r) => r.id !== reviewId);
-    updateCounterBadge();
+    // 3. Update modal preview & direct button
+    if (modalPreviewText) {
+      modalPreviewText.textContent = `“${text}”`;
+    }
+    if (modalDirectBtn) {
+      modalDirectBtn.href = activeBusiness.googleReviewUrl;
+    }
 
-    // 4. Update modal text preview & direct link
-    const reviewUrl = window.SMART_CONNECT_DATA?.business?.googleReviewUrl || 'https://search.google.com/local/writereview?placeid=ChIJdSHXX7ztDzkRrOF75hIsEoc';
-    const previewEl = document.getElementById('modal-preview-text');
-    if (previewEl) previewEl.textContent = `“${text}”`;
-
-    const directBtn = document.getElementById('modal-direct-btn');
-    if (directBtn) directBtn.href = reviewUrl;
-
-    // 5. Show modal confirmation
+    // 4. Show confirmation modal
     if (modalOverlay) {
       modalOverlay.classList.add('active');
       if (modalProgressBar) {
@@ -270,22 +269,21 @@
       }
     }
 
-    // 6. Redirect to Google Write-a-Review popup dialog after 1.2s (unless pauseRedirect is active in test mode)
+    // 5. Auto-redirect to Google Write-a-Review popup dialog in 1.2s
     if (testModeActive && pauseRedirect) {
-      console.log('🧪 Test Mode: Redirect paused. Target URL is:', reviewUrl);
+      console.log('🧪 Test Mode: Redirect paused. Review URL is:', activeBusiness.googleReviewUrl);
       setTimeout(() => {
         if (modalOverlay) modalOverlay.classList.remove('active');
-        filterAndRenderFeed();
       }, 1500);
       return;
     }
 
     setTimeout(() => {
-      window.location.href = reviewUrl;
+      window.location.href = activeBusiness.googleReviewUrl;
     }, 1200);
   }
 
-  // Textarea fallback for clipboard copying
+  // Fallback for clipboard
   function fallbackCopy(text) {
     const textArea = document.createElement('textarea');
     textArea.value = text;
@@ -304,15 +302,8 @@
     document.body.removeChild(textArea);
   }
 
-  // Update counter badge
-  function updateCounterBadge() {
-    if (reviewCountBadge) {
-      reviewCountBadge.textContent = `${availableReviews.length} available`;
-    }
-  }
-
-  // Setup Testing and Auxiliary Event Listeners
-  function setupEventListeners(business) {
+  // Setup auxiliary event listeners
+  function setupEventListeners() {
     if (testModeToggle) {
       testModeToggle.addEventListener('change', (e) => {
         testModeActive = e.target.checked;
@@ -320,7 +311,6 @@
         if (testActionsPanel) {
           testActionsPanel.classList.toggle('active', testModeActive);
         }
-        filterAndRenderFeed();
       });
     }
 
@@ -335,12 +325,11 @@
     if (btnResetCopied) {
       btnResetCopied.addEventListener('click', () => {
         localStorage.removeItem(STORAGE_KEY);
-        alert('✓ Local review history cleared! Reloading reviews pool...');
+        alert('✓ Local review history cleared!');
         window.location.reload();
       });
     }
 
-    // Modal background click dismiss
     if (modalOverlay) {
       modalOverlay.addEventListener('click', (e) => {
         if (e.target === modalOverlay) {
