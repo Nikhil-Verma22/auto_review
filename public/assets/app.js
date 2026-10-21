@@ -182,7 +182,7 @@
       const btnCustom = document.getElementById('btn-custom-review');
       if (btnCustom) {
         btnCustom.addEventListener('click', () => {
-          window.location.href = window.SMART_CONNECT_DATA?.business?.googleReviewUrl || 'https://maps.google.com/?cid=9732890204388975020';
+          window.location.href = window.SMART_CONNECT_DATA?.business?.googleReviewUrl || 'https://search.google.com/local/writereview?placeid=ChIJdSHXX7ztDzkRrOF75hIsEoc';
         });
       }
       return;
@@ -190,11 +190,11 @@
 
     reviewsFeed.innerHTML = filtered.map((r) => createReviewCardHTML(r)).join('');
 
-    // Attach copy & post events
-    reviewsFeed.querySelectorAll('.btn-copy-post').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const reviewId = btn.getAttribute('data-id');
-        const reviewText = decodeURIComponent(btn.getAttribute('data-text'));
+    // Attach copy & post events to both the card and the button
+    reviewsFeed.querySelectorAll('.review-card').forEach((card) => {
+      card.addEventListener('click', (e) => {
+        const reviewId = card.getAttribute('data-id');
+        const reviewText = decodeURIComponent(card.getAttribute('data-text'));
         handleCopyAndPost(reviewId, reviewText);
       });
     });
@@ -214,7 +214,7 @@
     const catBadge = catMeta ? `${catMeta.icon} ${catMeta.name}` : 'Verified Customer';
 
     return `
-      <div class="review-card" id="card-${r.id}">
+      <div class="review-card" id="card-${r.id}" data-id="${r.id}" data-text="${encodeURIComponent(r.text)}">
         <div class="card-top">
           <div class="author-meta">
             <div class="author-avatar">${initials}</div>
@@ -251,7 +251,15 @@
     availableReviews = availableReviews.filter((r) => r.id !== reviewId);
     updateCounterBadge();
 
-    // 4. Show modal confirmation
+    // 4. Update modal text preview & direct link
+    const reviewUrl = window.SMART_CONNECT_DATA?.business?.googleReviewUrl || 'https://search.google.com/local/writereview?placeid=ChIJdSHXX7ztDzkRrOF75hIsEoc';
+    const previewEl = document.getElementById('modal-preview-text');
+    if (previewEl) previewEl.textContent = `“${text}”`;
+
+    const directBtn = document.getElementById('modal-direct-btn');
+    if (directBtn) directBtn.href = reviewUrl;
+
+    // 5. Show modal confirmation
     if (modalOverlay) {
       modalOverlay.classList.add('active');
       if (modalProgressBar) {
@@ -262,9 +270,7 @@
       }
     }
 
-    // 5. Redirect to Google Maps review link after 1.2s (unless pauseRedirect is active in test mode)
-    const reviewUrl = window.SMART_CONNECT_DATA?.business?.googleReviewUrl || 'https://maps.google.com/?cid=9732890204388975020';
-
+    // 6. Redirect to Google Write-a-Review popup dialog after 1.2s (unless pauseRedirect is active in test mode)
     if (testModeActive && pauseRedirect) {
       console.log('🧪 Test Mode: Redirect paused. Target URL is:', reviewUrl);
       setTimeout(() => {

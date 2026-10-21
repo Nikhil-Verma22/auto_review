@@ -313,6 +313,56 @@ body {
   transition: transform 0.25s ease, border-color 0.25s ease;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
+}
+
+.modal-guide-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.modal-guide-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #e2e8f0;
+}
+
+.modal-guide-badge {
+  background: #2563eb;
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.modal-copied-preview {
+  background: rgba(0, 0, 0, 0.35);
+  border-left: 3px solid #10b981;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #94a3b8;
+  font-style: italic;
+  max-height: 54px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 14px;
+  text-align: left;
 }
 
 .review-card:hover {

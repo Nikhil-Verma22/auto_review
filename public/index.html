@@ -102,17 +102,34 @@
   <div class="copy-modal-overlay" id="copy-modal" role="dialog" aria-modal="true">
     <div class="copy-modal-card">
       <div class="modal-icon-check">✓</div>
-      <h2 class="modal-title">Review Copied!</h2>
-      <p class="modal-desc">
-        Your review has been saved to your clipboard. Opening Google Reviews right now...
+      <h2 class="modal-title">Review Copied to Clipboard!</h2>
+      <p class="modal-desc" style="margin-bottom: 12px;">
+        Opening Google Reviews for <strong>Pink City Gems</strong>...
       </p>
-      <div class="modal-stars-reminder">
-        Tap 5 Stars ★★★★★ & Paste
+
+      <div class="modal-copied-preview" id="modal-preview-text">
+        "Loading preview..."
       </div>
+
+      <div class="modal-guide-steps">
+        <div class="modal-guide-row">
+          <span class="modal-guide-badge">1</span>
+          <span>Tap <strong>5 Stars ★★★★★</strong> on Google</span>
+        </div>
+        <div class="modal-guide-row">
+          <span class="modal-guide-badge">2</span>
+          <span>Tap <strong>Clipboard chip</strong> above keyboard (or Paste)</span>
+        </div>
+      </div>
+
+      <a id="modal-direct-btn" href="https://search.google.com/local/writereview?placeid=ChIJdSHXX7ztDzkRrOF75hIsEoc" class="btn-copy-post" style="text-decoration: none; margin-bottom: 14px; padding: 12px 16px; font-size: 14px;">
+        ⭐⭐⭐⭐⭐ Open Google Review Box Now
+      </a>
+
       <div class="redirect-spinner-bar">
         <div class="redirect-spinner-fill" id="modal-progress"></div>
       </div>
-      <div class="redirect-status-text">Redirecting to Google in 1.2s...</div>
+      <div class="redirect-status-text" id="modal-countdown-text">Opening review popup in 1.2s...</div>
     </div>
   </div>
 

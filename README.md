@@ -3,7 +3,7 @@
 
 [![Deploy Smart CONNECT QR to GitHub Pages](https://github.com/Nikhil-Verma22/auto_review/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/Nikhil-Verma22/auto_review/actions/workflows/deploy-pages.yml)
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-success?logo=github)](https://nikhil-verma22.github.io/auto_review/)
-[![Google Rating](https://img.shields.io/badge/Google%20Rating-5.0%20%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%85-f59e0b)](https://maps.google.com/?cid=9732890204388975020)
+[![Google Rating](https://img.shields.io/badge/Google%20Rating-5.0%20%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%85-f59e0b)](https://search.google.com/local/writereview?placeid=ChIJdSHXX7ztDzkRrOF75hIsEoc)
 [![Zero Cost](https://img.shields.io/badge/Hosting-100%25%20Free%20GitHub%20Only-blue)](#)
 
 ---
