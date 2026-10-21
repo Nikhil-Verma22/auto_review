@@ -70,43 +70,55 @@
     }
   }
 
-  // Generate 5 dynamic reviews for any external business
-  function generateGenericReviews(bizName) {
+  // Generate 5 natural, human-sounding reviews for any external business
+  function generateNaturalBusinessReviews(bizName, category, ownerName, colloquial) {
+    if (window.AiReviewEngine) {
+      const sanitized = window.AiReviewEngine.sanitizeBusinessTitle(bizName);
+      const res = window.AiReviewEngine.generateSmartReviews({
+        name: sanitized.clean,
+        colloquial: colloquial || sanitized.colloquial,
+        category: category || sanitized.categoryHint,
+        ownerName: ownerName || ''
+      });
+      return res.reviews;
+    }
+
+    // Fallback if AI engine not loaded
     return [
       {
-        id: 'rev_gen_1',
-        badge: '⭐ Premium Quality',
+        id: 'rev_1',
+        badge: '⭐ Quality & Variety',
         author: 'Rohit Sharma',
         rating: 5,
-        text: `Exceptional quality and service at ${bizName}! The entire experience exceeded my expectations. Very prompt, welcoming, and professional.`
+        text: `Consistently high quality products and dependable service. Everything was neatly organized and handled with great care.`
       },
       {
-        id: 'rev_gen_2',
-        badge: '🤝 Top Customer Care',
+        id: 'rev_2',
+        badge: '🤝 Humble Hospitality',
         author: 'Priya Verma',
         rating: 5,
-        text: `Outstanding customer care and great attention to detail. The team at ${bizName} is trustworthy, polite, and truly values their clients.`
+        text: `The staff and owner are remarkably polite, humble, and attentive to customer needs. Truly welcoming neighborhood service!`
       },
       {
-        id: 'rev_gen_3',
-        badge: '💯 Highly Recommended',
+        id: 'rev_3',
+        badge: '💰 Fair & Honest Rates',
         author: 'Amit Patel',
         rating: 5,
-        text: `One of the finest establishments in the city! Transparent pricing, honest advice, and top-tier professionalism. Highly recommended to everyone.`
+        text: `Honest and transparent pricing with zero unnecessary markups. Great value for money and complete peace of mind.`
       },
       {
-        id: 'rev_gen_4',
-        badge: '✨ Great Experience',
+        id: 'rev_4',
+        badge: '✨ Clean & Convenient',
         author: 'Dr. Neha Gupta',
         rating: 5,
-        text: `A completely smooth and hassle-free experience. ${bizName} sets the benchmark for reliability and dedication. 5 stars all the way!`
+        text: `A very smooth, clean, and hassle-free shopping experience. Prompt assistance and hassle-free billing every single time.`
       },
       {
-        id: 'rev_gen_5',
-        badge: '🏆 Reliable & Trusted',
+        id: 'rev_5',
+        badge: '🏆 Highly Recommended',
         author: 'Rajesh Mehra',
         rating: 5,
-        text: `Consistently reliable, fair, and high standard. I have recommended ${bizName} to my friends and family, and will definitely return!`
+        text: `Our family has trusted this establishment for a long time. Consistent standards, fair dealing, and humble customer care. 5 stars!`
       }
     ];
   }
@@ -121,6 +133,10 @@
     const paramBiz = urlParams.get('biz');
     const paramPlaceId = urlParams.get('placeid');
     const paramLoc = urlParams.get('loc');
+    const paramCat = urlParams.get('cat');
+    const paramShort = urlParams.get('short');
+    const paramOwner = urlParams.get('owner');
+    const paramRevs = urlParams.get('revs');
     const paramReviewUrl = urlParams.get('reviewUrl');
 
     if (paramPlaceId) {
@@ -134,10 +150,19 @@
     }
 
     if (paramBiz) {
-      activeBusiness.name = decodeURIComponent(paramBiz);
+      const decodedRaw = decodeURIComponent(paramBiz);
+      const sanitized = window.AiReviewEngine 
+        ? window.AiReviewEngine.sanitizeBusinessTitle(decodedRaw)
+        : { clean: decodedRaw, colloquial: decodedRaw };
+
+      activeBusiness.name = sanitized.clean;
+      activeBusiness.colloquial = paramShort ? decodeURIComponent(paramShort) : sanitized.colloquial;
+      activeBusiness.category = paramCat ? decodeURIComponent(paramCat) : sanitized.categoryHint;
       activeBusiness.locality = paramLoc ? decodeURIComponent(paramLoc) : 'Verified Google Business';
     } else {
       activeBusiness.name = defaultBiz.name || 'Pink City Gems';
+      activeBusiness.colloquial = 'Pink City Gems';
+      activeBusiness.category = 'Gemstone Dealer';
       activeBusiness.locality = defaultBiz.locality || 'Sector 23-C, Chandigarh';
     }
 
@@ -154,13 +179,29 @@
     }
 
     // 2. Load the 5 ready comments
-    if (paramBiz && paramBiz.toLowerCase() !== 'pink city gems') {
-      availableReviews = generateGenericReviews(activeBusiness.name);
-    } else {
-      // Use the 5 curated reviews for Pink City Gems
-      availableReviews = (data?.reviews && data.reviews.length >= 5) 
-        ? data.reviews.slice(0, 5) 
-        : generateGenericReviews(activeBusiness.name);
+    // Check if custom packed reviews exist in URL
+    if (paramRevs && window.AiReviewEngine) {
+      const unpacked = window.AiReviewEngine.unpackReviewsFromUrl(paramRevs);
+      if (unpacked && unpacked.length >= 5) {
+        availableReviews = unpacked.slice(0, 5);
+      }
+    }
+
+    // If still empty, check for active custom business
+    if (!availableReviews || availableReviews.length === 0) {
+      if (paramBiz && paramBiz.toLowerCase() !== 'pink city gems') {
+        availableReviews = generateNaturalBusinessReviews(
+          activeBusiness.name,
+          activeBusiness.category,
+          paramOwner ? decodeURIComponent(paramOwner) : '',
+          activeBusiness.colloquial
+        );
+      } else {
+        // Use the 5 curated reviews for Pink City Gems
+        availableReviews = (data?.reviews && data.reviews.length >= 5) 
+          ? data.reviews.slice(0, 5) 
+          : generateNaturalBusinessReviews('Pink City Gems', 'jewelry_gems', '', 'Pink City Gems');
+      }
     }
 
     // Render the 5 review cards

@@ -158,6 +158,103 @@
     @keyframes spin {
       100% { transform: rotate(360deg); }
     }
+
+    /* AI Review Studio Section */
+    .ai-studio-panel {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-top: 18px;
+    }
+    .ai-studio-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #c084fc;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .ai-field-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    @media (min-width: 640px) {
+      .ai-field-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .ai-field-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .ai-input {
+      width: 100%;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-sm);
+      color: #ffffff;
+      font-size: 13px;
+      padding: 8px 10px;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .ai-input:focus {
+      border-color: #a855f7;
+      box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2);
+    }
+    .btn-ai-sparkle {
+      background: linear-gradient(90deg, #7c3aed, #9333ea, #db2777);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 10px 18px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      margin-top: 12px;
+    }
+    .btn-ai-sparkle:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(147, 51, 234, 0.35);
+    }
+    .btn-ai-sparkle:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .ai-reviews-container {
+      margin-top: 16px;
+      display: none;
+    }
+    .ai-reviews-container.active {
+      display: block;
+    }
+    .ai-review-edit-card {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+    .ai-review-edit-header {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
   </style>
 </head>
 <body>
@@ -236,13 +333,92 @@
           </div>
         </div>
 
+        <!-- Action Buttons -->
         <div style="margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap;">
           <a id="btn-test-experience" href="./index.html" target="_blank" class="btn-copy-url" style="text-decoration: none; padding: 8px 16px; font-size: 13px; background: #10b981;">
-            📱 Test Mobile Review Flow
+            📱 Test Customer Review Page
           </a>
           <button id="btn-apply-as-default" class="btn-copy-url" style="background: rgba(255, 255, 255, 0.1); padding: 8px 16px; font-size: 13px;">
             💾 Save As Active Business
           </button>
+        </div>
+
+        <!-- AI Business & Review Framing Studio Panel -->
+        <div class="ai-studio-panel">
+          <div class="ai-studio-title">
+            <span>✨ AI Business & 5-Review Framing Studio</span>
+          </div>
+          <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5;">
+            Frames 5 realistic, human-sounding 5★ reviews inspired by your real business to help you rank on Google Maps. No fake corporate cliches.
+          </p>
+
+          <div class="ai-field-grid">
+            <div>
+              <label class="ai-field-label">Full Business Name</label>
+              <input type="text" id="ai-biz-name" class="ai-input" placeholder="e.g. New Annapurna Store">
+            </div>
+            <div>
+              <label class="ai-field-label">Common / Spoken Name</label>
+              <input type="text" id="ai-short-name" class="ai-input" placeholder="e.g. Annapurna Store (used naturally in reviews)">
+            </div>
+            <div>
+              <label class="ai-field-label">Category / Industry</label>
+              <select id="ai-category" class="ai-input">
+                <option value="grocery">🛒 Grocery, Kirana & Daily Needs</option>
+                <option value="food">🍽️ Restaurant, Cafe & Food</option>
+                <option value="sweets_bakery">🍬 Sweets, Mithai & Bakery</option>
+                <option value="healthcare">🩺 Clinic, Doctor & Dental</option>
+                <option value="salon_beauty">✂️ Salon, Beauty Care & Spa</option>
+                <option value="jewelry_gems">💎 Gemstones, Jeweller & Ratna</option>
+                <option value="auto_garage">🔧 Auto Repair, Garage & Bike Care</option>
+                <option value="clothing_fashion">👗 Clothing, Boutique & Tailoring</option>
+                <option value="electronics_mobile">📱 Electronics & Mobile Repair</option>
+                <option value="pharmacy">💊 Pharmacy & Chemist</option>
+                <option value="fitness_gym">🏋️ Gym & Fitness</option>
+                <option value="general">🏢 General Retail / Services</option>
+              </select>
+            </div>
+            <div>
+              <label class="ai-field-label">Famous Items or Owner Name (Optional)</label>
+              <input type="text" id="ai-owner-name" class="ai-input" placeholder="e.g. Ramesh Uncle, fresh dairy, organic pulses">
+            </div>
+          </div>
+
+          <div style="margin-top: 10px;">
+            <label class="ai-field-label">Existing Reviews or Specific Highlights to Mirror (Optional)</label>
+            <textarea id="ai-sample-reviews" class="ai-input" rows="2" placeholder="Paste 1-2 snippets from actual Google Maps reviews so AI captures your real customer vibe and phrases..."></textarea>
+          </div>
+
+          <div style="margin-top: 10px;">
+            <label class="ai-field-label">Google Gemini API Key (Optional)</label>
+            <input type="password" id="ai-gemini-key" class="ai-input" placeholder="Enter Gemini key (or leave blank to use Built-in Smart AI)">
+            <span style="font-size: 11px; color: var(--text-dim); margin-top: 3px; display: block;">
+              Get a free API key at <a href="https://aistudio.google.com/" target="_blank" style="color: #60a5fa;">aistudio.google.com</a>. Built-in smart engine runs 100% offline without any key!
+            </span>
+          </div>
+
+          <button id="btn-generate-ai-reviews" class="btn-ai-sparkle">
+            <span>✨ Frame 5 AI Growth Reviews</span>
+          </button>
+
+          <!-- Generated Reviews Editing Grid -->
+          <div class="ai-reviews-container active" id="ai-reviews-box" style="margin-top: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 13px; font-weight: 700; color: #ffffff;">5 Ready Customer Reviews</span>
+              <span style="font-size: 11px; color: #34d399;">You can edit any review text below:</span>
+            </div>
+
+            <div id="ai-reviews-list">
+              <!-- Dynamically rendered 5 review editing cards -->
+            </div>
+
+            <button id="btn-apply-ai-reviews" class="btn-ai-sparkle" style="background: linear-gradient(90deg, #10b981, #059669); width: 100%; justify-content: center; margin-top: 8px; font-size: 14px;">
+              <span>🚀 Apply 5 Reviews to Standee & QR Code</span>
+            </button>
+            <div id="ai-apply-notice" style="display: none; color: #34d399; font-size: 12px; margin-top: 8px; text-align: center; font-weight: 600;">
+              ✓ Applied! Standee QR code and NFC URL now link directly to these 5 reviews.
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -386,23 +562,37 @@
     </div>
   </div>
 
-  <!-- Client QR Library, Google Maps Resolver & App Scripts -->
+  <!-- Client QR Library, Google Maps Resolver, AI Engine & App Scripts -->
   <script src="./assets/qrcode.min.js"></script>
   <script src="./assets/google-maps-resolver.js"></script>
+  <script src="./assets/ai-review-engine.js"></script>
   <script src="./assets/data-bundle.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       let currentBizName = 'Pink City Gems';
+      let currentColloquial = 'Pink City Gems';
+      let currentCategory = 'jewelry_gems';
       let currentPlaceId = 'ChIJdSHXX7ztDzkRrOF75hIsEoc';
       let currentGoogleReviewUrl = 'https://search.google.com/local/writereview?placeid=ChIJdSHXX7ztDzkRrOF75hIsEoc';
       let currentTargetUrl = window.location.origin + window.location.pathname.replace('standee.html', '');
+      let currentReviews = [];
+
+      // Load saved gemini key
+      const savedKey = localStorage.getItem('smart_gemini_api_key');
+      if (savedKey && document.getElementById('ai-gemini-key')) {
+        document.getElementById('ai-gemini-key').value = savedKey;
+      }
 
       // Load initial from data bundle
       const data = window.SMART_CONNECT_DATA;
       if (data && data.business) {
         currentBizName = data.business.name || currentBizName;
+        currentColloquial = currentBizName;
         currentPlaceId = data.business.placeId || currentPlaceId;
         currentGoogleReviewUrl = data.business.googleReviewUrl || currentGoogleReviewUrl;
+      }
+      if (data && data.reviews && data.reviews.length >= 5) {
+        currentReviews = data.reviews.slice(0, 5);
       }
 
       // Check saved custom business from localStorage
@@ -411,21 +601,63 @@
         try {
           const parsed = JSON.parse(savedBiz);
           currentBizName = parsed.name || currentBizName;
+          currentColloquial = parsed.colloquial || currentBizName;
+          currentCategory = parsed.category || currentCategory;
           currentPlaceId = parsed.placeId || currentPlaceId;
           currentGoogleReviewUrl = parsed.googleReviewUrl || currentGoogleReviewUrl;
+          if (parsed.reviews && parsed.reviews.length >= 5) {
+            currentReviews = parsed.reviews;
+          }
         } catch(e) {}
       }
 
+      // Pre-fill fields
+      if (document.getElementById('ai-biz-name')) {
+        document.getElementById('ai-biz-name').value = currentBizName;
+        document.getElementById('ai-short-name').value = currentColloquial;
+        document.getElementById('ai-category').value = currentCategory;
+      }
+
+      renderAiReviewsUI();
       updateUI();
+
+      // Render the 5 review edit cards
+      function renderAiReviewsUI() {
+        const listEl = document.getElementById('ai-reviews-list');
+        if (!listEl || !currentReviews || currentReviews.length === 0) return;
+
+        listEl.innerHTML = currentReviews.slice(0, 5).map((r, i) => `
+          <div class="ai-review-edit-card" id="rev-card-${i}">
+            <div class="ai-review-edit-header">
+              <input type="text" class="ai-input" id="rev-badge-${i}" value="${r.badge || ('⭐ Option #' + (i + 1))}" placeholder="Badge" style="flex: 1; min-width: 140px; font-weight: 700; color: #fbbf24;">
+              <input type="text" class="ai-input" id="rev-author-${i}" value="${r.author || 'Verified Customer'}" placeholder="Author Name" style="flex: 1; min-width: 140px; color: #93c5fd;">
+            </div>
+            <textarea class="ai-input" id="rev-text-${i}" rows="2" style="resize: vertical; font-size: 13px; line-height: 1.4;">${r.text || ''}</textarea>
+          </div>
+        `).join('');
+      }
 
       // UI Update Function
       function updateUI() {
         const isDefault = currentBizName.toLowerCase().includes('pink city');
         const baseUrl = window.location.origin + window.location.pathname.replace('standee.html', '');
         
-        currentTargetUrl = isDefault 
-          ? baseUrl 
-          : `${baseUrl}?biz=${encodeURIComponent(currentBizName)}&placeid=${encodeURIComponent(currentPlaceId)}`;
+        let packedParam = '';
+        if (currentReviews && currentReviews.length >= 5 && window.AiReviewEngine) {
+          packedParam = window.AiReviewEngine.packReviewsToUrl(currentReviews);
+        }
+
+        if (isDefault && !packedParam) {
+          currentTargetUrl = baseUrl;
+        } else {
+          const params = new URLSearchParams();
+          params.set('biz', currentBizName);
+          if (currentColloquial && currentColloquial !== currentBizName) params.set('short', currentColloquial);
+          if (currentCategory) params.set('cat', currentCategory);
+          if (currentPlaceId) params.set('placeid', currentPlaceId);
+          if (packedParam) params.set('revs', packedParam);
+          currentTargetUrl = `${baseUrl}?${params.toString()}`;
+        }
 
         // Update Text Elements
         document.getElementById('nfc-url-text').textContent = currentTargetUrl;
@@ -475,13 +707,36 @@
 
         hideError();
         btnResolve.disabled = true;
-        btnResolve.innerHTML = '<span class="pulse-spin">⚙️</span> Resolving Link...';
+        btnResolve.innerHTML = '<span class="pulse-spin">⚙️</span> Analyzing Business & Resolving Link...';
 
         try {
           const result = await window.GoogleMapsResolver.resolveGoogleMapsInput(val);
           currentBizName = result.name || 'Google Business';
+          currentColloquial = result.colloquial || currentBizName;
           currentPlaceId = result.placeId;
           currentGoogleReviewUrl = result.googleReviewUrl;
+
+          // Auto-detect category
+          if (window.AiReviewEngine) {
+            currentCategory = window.AiReviewEngine.detectCategory(`${result.name} ${result.categoryHint || ''}`);
+          }
+
+          // Populate inputs in AI Studio
+          document.getElementById('ai-biz-name').value = currentBizName;
+          document.getElementById('ai-short-name').value = currentColloquial;
+          document.getElementById('ai-category').value = currentCategory;
+
+          // Automatically frame 5 smart reviews
+          if (window.AiReviewEngine) {
+            const smartRes = window.AiReviewEngine.generateSmartReviews({
+              name: currentBizName,
+              colloquial: currentColloquial,
+              category: currentCategory,
+              ownerName: ''
+            });
+            currentReviews = smartRes.reviews;
+            renderAiReviewsUI();
+          }
 
           updateUI();
           resolvedBox.classList.add('active');
@@ -502,6 +757,110 @@
         errorBox.style.display = 'none';
       }
 
+      // 2. AI Review Generator Click
+      const btnGenAi = document.getElementById('btn-generate-ai-reviews');
+      if (btnGenAi) {
+        btnGenAi.addEventListener('click', async () => {
+          const name = document.getElementById('ai-biz-name').value.trim() || currentBizName;
+          const colloquial = document.getElementById('ai-short-name').value.trim() || name;
+          const category = document.getElementById('ai-category').value;
+          const ownerName = document.getElementById('ai-owner-name').value.trim();
+          const sampleReviews = document.getElementById('ai-sample-reviews').value.trim();
+          const geminiKey = document.getElementById('ai-gemini-key').value.trim();
+
+          if (geminiKey) {
+            localStorage.setItem('smart_gemini_api_key', geminiKey);
+          }
+
+          btnGenAi.disabled = true;
+          btnGenAi.innerHTML = '<span class="pulse-spin">✨</span> Analyzing with AI...';
+
+          try {
+            if (geminiKey && window.AiReviewEngine) {
+              const aiRevs = await window.AiReviewEngine.generateWithGemini({
+                apiKey: geminiKey,
+                name,
+                colloquial,
+                category,
+                ownerName,
+                sampleReviews
+              });
+              currentReviews = aiRevs;
+            } else if (window.AiReviewEngine) {
+              const smartRes = window.AiReviewEngine.generateSmartReviews({
+                name,
+                colloquial,
+                category,
+                ownerName,
+                sampleReviews
+              });
+              currentReviews = smartRes.reviews;
+            }
+
+            currentBizName = name;
+            currentColloquial = colloquial;
+            currentCategory = category;
+
+            renderAiReviewsUI();
+            updateUI();
+          } catch (e) {
+            alert('AI Generation Error: ' + e.message + '\nFalling back to built-in Smart AI engine.');
+            if (window.AiReviewEngine) {
+              const fallback = window.AiReviewEngine.generateSmartReviews({
+                name,
+                colloquial,
+                category,
+                ownerName
+              });
+              currentReviews = fallback.reviews;
+              renderAiReviewsUI();
+              updateUI();
+            }
+          } finally {
+            btnGenAi.disabled = false;
+            btnGenAi.innerHTML = '<span>✨ Frame 5 AI Growth Reviews</span>';
+          }
+        });
+      }
+
+      // 3. Apply Reviews Button Click
+      const btnApplyAi = document.getElementById('btn-apply-ai-reviews');
+      if (btnApplyAi) {
+        btnApplyAi.addEventListener('click', () => {
+          const updated = [];
+          for (let i = 0; i < 5; i++) {
+            const badgeEl = document.getElementById(`rev-badge-${i}`);
+            const authorEl = document.getElementById(`rev-author-${i}`);
+            const textEl = document.getElementById(`rev-text-${i}`);
+            if (badgeEl && authorEl && textEl) {
+              updated.push({
+                id: `rev_${i + 1}`,
+                badge: badgeEl.value.trim(),
+                author: authorEl.value.trim(),
+                rating: 5,
+                text: textEl.value.trim()
+              });
+            }
+          }
+
+          if (updated.length === 5) {
+            currentReviews = updated;
+          }
+
+          currentBizName = document.getElementById('ai-biz-name').value.trim() || currentBizName;
+          currentColloquial = document.getElementById('ai-short-name').value.trim() || currentBizName;
+          currentCategory = document.getElementById('ai-category').value || currentCategory;
+
+          updateUI();
+
+          const notice = document.getElementById('ai-apply-notice');
+          if (notice) {
+            notice.style.display = 'block';
+            setTimeout(() => { notice.style.display = 'none'; }, 4000);
+          }
+        });
+      }
+
       // Sample link helper
       document.getElementById('btn-sample-pink').addEventListener('click', () => {
         inputMaps.value = 'https://maps.app.goo.gl/7c9JDM7iPRyp6sB57';
@@ -512,10 +871,13 @@
       document.getElementById('btn-apply-as-default').addEventListener('click', () => {
         localStorage.setItem('smart_connect_custom_biz', JSON.stringify({
           name: currentBizName,
+          colloquial: currentColloquial,
+          category: currentCategory,
           placeId: currentPlaceId,
-          googleReviewUrl: currentGoogleReviewUrl
+          googleReviewUrl: currentGoogleReviewUrl,
+          reviews: currentReviews
         }));
-        alert(`✓ "${currentBizName}" saved as active business!`);
+        alert(`✓ "${currentBizName}" with 5 customized reviews saved as active business!`);
       });
 
       // 1-Click Copy NFC URL

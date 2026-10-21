@@ -49,7 +49,11 @@ graph LR
    - ✨ **Healing Crystals & Rudraksha** (Authentic Himalayan Rudraksha, Amethyst, Pyramids, Chakra bracelets)
    - 💍 **Custom Rings & Pendants** (Vedic open-back settings in gold, silver, and panchdhatu)
    - 📜 **Wholesale & Lab Certification** (Govt/IGI lab reports, wholesale pricing in Sector 23 Chandigarh)
-4. **Universal Generator for Any Business**: In `standee.html`, paste ANY Google Maps share link (`maps.app.goo.gl/...` or full URL) to dynamically generate the direct review link, live 4×6" standee, and custom NFC target URL!
+4. **Universal Generator & AI Review Framing Studio**: In `standee.html`, paste ANY Google Maps link (`maps.app.goo.gl/...` or full URL) to:
+   - Extract canonical Place ID and sanitize business name (cleans phone numbers, SEO clutter, SCO numbers, and derives natural colloquial store name).
+   - Auto-detect business industry (Grocery, Restaurant, Sweets/Bakery, Dental/Clinic, Salon, Auto Garage, Clothing, Electronics, etc.).
+   - Frame 5 authentic, growth-driving 5★ reviews using Built-in Smart AI or Google Gemini API.
+   - Edit, tweak, or apply reviews to live 4×6" standee, QR code, and NFC card.
 5. **1-Tap Clipboard Copy & Seamless Direct Dialog**: Tapping any review card copies the text and automatically opens the Google "Write a Review" dialog directly via its canonical Place ID (`ChIJ...`).
 
 ---
@@ -66,7 +70,7 @@ graph LR
 ├── config/
 │   └── business.json                     # Master config: Business name, locality, CID, categories & keywords
 ├── data/
-│   └── reviews.json                      # Pool of 65+ natural, unique, 5-star SEO-rich reviews
+│   └── reviews.json                      # Pool of 5 curated natural 5-star reviews
 ├── scripts/
 │   ├── generate_qr_assets.mjs            # Generates qr-code.svg, qr-code.png (1024x1024), and data-bundle.js
 │   ├── replenish_reviews.mjs             # Combinatorial SEO generation engine (+ optional Gemini API)
@@ -74,11 +78,14 @@ graph LR
 ├── public/                               # Published to https://nikhil-verma22.github.io/auto_review/
 │   ├── .nojekyll                         # Bypasses Jekyll on GitHub Pages
 │   ├── index.html                        # Mobile Customer Review Landing Page
-│   ├── standee.html                      # Printable 4x6" Countertop Standee & CR80 NFC Card Studio
+│   ├── standee.html                      # Printable 4x6" Standee & AI Review Studio
 │   ├── admin.html                        # Owner Dashboard & AI Reply Studio
 │   └── assets/
 │       ├── style.css                     # Premium responsive stylesheet (Outfit & Inter fonts)
-│       ├── app.js                        # Client logic (filters, clipboard, shuffle, testing)
+│       ├── app.js                        # Client logic (clipboard, review rendering, redirect)
+│       ├── ai-review-engine.js           # AI Review Framing Engine (Gemini API + Built-in Smart AI)
+│       ├── google-maps-resolver.js       # Universal Google Maps URL & Place ID Decoder
+│       ├── qrcode.min.js                 # Client-side QR code generator
 │       ├── qr-code.png                   # High-res 1024x1024 PNG
 │       ├── qr-code.svg                   # Scalable vector SVG
 │       └── data-bundle.js                # Pre-bundled instant data store

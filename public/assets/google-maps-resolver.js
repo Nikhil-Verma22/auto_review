@@ -31,6 +31,67 @@
     }
   }
 
+  // Sanitize raw Google Maps listing title (removes phone numbers, SCO, ALL CAPS, parentheses)
+  function sanitizeBusinessTitle(raw) {
+    if (!raw) return { clean: 'Google Business', colloquial: 'the shop', categoryHint: '' };
+
+    let title = raw;
+    try { title = decodeURIComponent(title); } catch (e) {}
+    title = title.replace(/\+/g, ' ').trim();
+
+    let categoryHint = '';
+
+    // Extract category inside parentheses e.g. (Grocery & Daily Needs)
+    const parenMatch = title.match(/\(([^)]+)\)/);
+    if (parenMatch) {
+      categoryHint = parenMatch[1].trim();
+      title = title.replace(/\([^)]+\)/g, '').trim();
+    }
+
+    // Split on pipe '|' or ' - '
+    if (title.includes('|')) {
+      const parts = title.split('|').map(s => s.trim()).filter(Boolean);
+      title = parts[0];
+      if (!categoryHint && parts[1]) categoryHint = parts[1];
+    }
+
+    // Strip phone numbers like +91 98888 88888 or 9876543210
+    title = title.replace(/(?:\+?\d{1,3}[- ]?)?\(?\d{3,5}\)?[- ]?\d{3,5}[- ]?\d{3,5}/g, '').trim();
+
+    // Strip SCO / Booth / Shop / Sector / Landmark suffixes
+    title = title.replace(/[-|,|•]\s*(?:SCO|Shop|Booth|Plot|Sector|Sec|Near|Opp|Opposite)[\s\w\d,-]+/gi, '').trim();
+
+    // Check hyphen split e.g. "Store - Grocery & Daily Needs"
+    if (title.includes(' - ')) {
+      const parts = title.split(' - ').map(s => s.trim()).filter(Boolean);
+      if (parts.length > 1 && parts[1].length > 2) {
+        if (!categoryHint) categoryHint = parts[1];
+        title = parts[0];
+      }
+    }
+
+    // Strip trailing punctuation
+    title = title.replace(/[-|,\/•]+$/, '').trim();
+
+    // Convert ALL CAPS to Title Case
+    if (title === title.toUpperCase() && title.length > 3) {
+      title = title.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+    }
+
+    // Derive natural colloquial name (drop 'New', 'Shree', 'The', 'M/s' prefix if followed by main brand)
+    let colloquial = title;
+    const prefixMatch = title.match(/^(?:New|Shree|Sri|The|M\/s\.?)\s+(.+)$/i);
+    if (prefixMatch && prefixMatch[1].length > 2) {
+      colloquial = prefixMatch[1];
+    }
+
+    return {
+      clean: title || 'Google Business',
+      colloquial: colloquial || title || 'the shop',
+      categoryHint: categoryHint || ''
+    };
+  }
+
   // Parse an expanded Google Maps URL (runs 100% offline)
   function parseExpandedMapsUrl(url) {
     if (!url) return null;
@@ -46,11 +107,13 @@
     }
 
     // Extract business name from URL path
-    let name = '';
+    let rawName = '';
     const nameMatch = url.match(/\/maps\/place\/([^/@?#]+)/i);
     if (nameMatch) {
-      name = decodeURIComponent(nameMatch[1].replace(/\+/g, ' '));
+      rawName = decodeURIComponent(nameMatch[1].replace(/\+/g, ' '));
     }
+
+    const { clean, colloquial, categoryHint } = sanitizeBusinessTitle(rawName);
 
     // Extract Hex coordinates
     const hexMatch = url.match(/!1s(0x[a-f0-9]+):(0x[a-f0-9]+)/i) || 
@@ -72,7 +135,7 @@
     const cidMatch = url.match(/[?&]cid=([0-9]+)/i);
     if (cidMatch) cid = cidMatch[1];
 
-    if (!placeId && !cid && !name) return null;
+    if (!placeId && !cid && !clean) return null;
 
     const reviewUrl = placeId
       ? `https://search.google.com/local/writereview?placeid=${placeId}`
@@ -81,7 +144,10 @@
       : url;
 
     return {
-      name: name || 'Google Business',
+      name: clean || 'Google Business',
+      rawName: rawName || '',
+      colloquial: colloquial || clean || 'the shop',
+      categoryHint: categoryHint || '',
       placeId: placeId || '',
       cid: cid || '',
       googleReviewUrl: reviewUrl,
@@ -189,6 +255,7 @@
   // Expose globally
   window.GoogleMapsResolver = {
     computePlaceId,
+    sanitizeBusinessTitle,
     parseExpandedMapsUrl,
     resolveGoogleMapsInput
   };
