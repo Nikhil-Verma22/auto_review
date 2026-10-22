@@ -227,7 +227,7 @@ OUTPUT FORMAT: Return ONLY valid, raw JSON array of 5 objects (no markdown, no b
   }
 ]`;
 
-  const candidateModels = ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-2.0-flash-exp', 'gemini-1.5-pro', 'gemini-pro'];
+  const candidateModels = ['gemini-2.5-flash', 'gemini-2.5-pro', 'gemini-2.0-flash'];
 
   let lastError = null;
   for (const model of candidateModels) {
@@ -242,7 +242,8 @@ OUTPUT FORMAT: Return ONLY valid, raw JSON array of 5 objects (no markdown, no b
           contents: [{ parts: [{ text: prompt }] }],
           generationConfig: {
             temperature: 0.7,
-            maxOutputTokens: 1200
+            maxOutputTokens: 2500,
+            responseMimeType: 'application/json'
           }
         })
       });
@@ -257,7 +258,19 @@ OUTPUT FORMAT: Return ONLY valid, raw JSON array of 5 objects (no markdown, no b
       const data = await response.json();
       const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
       const cleaned = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
-      const parsed = JSON.parse(cleaned);
+
+      let parsed = null;
+      try {
+        parsed = JSON.parse(cleaned);
+      } catch (pe) {
+        const start = cleaned.indexOf('[');
+        const end = cleaned.lastIndexOf(']');
+        if (start !== -1 && end > start) {
+          parsed = JSON.parse(cleaned.slice(start, end + 1));
+        } else {
+          throw pe;
+        }
+      }
 
       if (Array.isArray(parsed) && parsed.length >= 5) {
         console.log(`✓ Model "${model}" generated ${parsed.length} reviews successfully!`);
