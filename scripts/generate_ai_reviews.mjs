@@ -227,36 +227,49 @@ OUTPUT FORMAT: Return ONLY valid, raw JSON array of 5 objects (no markdown, no b
   }
 ]`;
 
-  console.log(`Calling Google Gemini API for "${name}" (${category || 'General'})...`);
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+  const candidateModels = ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-2.0-flash-exp', 'gemini-1.5-pro', 'gemini-pro'];
 
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
-        temperature: 0.7,
-        maxOutputTokens: 1200
+  let lastError = null;
+  for (const model of candidateModels) {
+    try {
+      console.log(`Calling Google Gemini API using model "${model}" for "${name}" (${category || 'General'})...`);
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature: 0.7,
+            maxOutputTokens: 1200
+          }
+        })
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        console.warn(`Model ${model} returned status ${response.status}. Trying fallback...`);
+        lastError = new Error(`Gemini API (${model}) error ${response.status}: ${errText}`);
+        continue;
       }
-    })
-  });
 
-  if (!response.ok) {
-    const errText = await response.text();
-    throw new Error(`Gemini API error (${response.status}): ${errText}`);
+      const data = await response.json();
+      const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      const cleaned = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
+      const parsed = JSON.parse(cleaned);
+
+      if (Array.isArray(parsed) && parsed.length >= 5) {
+        console.log(`✓ Model "${model}" generated ${parsed.length} reviews successfully!`);
+        return parsed.slice(0, 5);
+      }
+    } catch (e) {
+      lastError = e;
+      console.warn(`Attempt with ${model} failed:`, e.message);
+    }
   }
 
-  const data = await response.json();
-  const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-  const cleaned = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
-  const parsed = JSON.parse(cleaned);
-
-  if (!Array.isArray(parsed) || parsed.length < 5) {
-    throw new Error('Gemini response did not contain 5 reviews.');
-  }
-
-  return parsed.slice(0, 5);
+  throw lastError || new Error('All Gemini models failed to generate reviews.');
 }
 
 // 4. Main Execution
