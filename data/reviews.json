@@ -2,51 +2,51 @@
   {
     "id": "rev_001",
     "categoryId": "gemstone-dealer",
-    "badge": "⭐ Top Quality",
-    "author": "Dr. Amit Bansal",
+    "badge": "✨ Sparkling Gems",
+    "author": "Anjali Sharma",
     "rating": 5,
-    "text": "One of the most dependable places in the area. High standards, transparent dealing, and genuine quality products. Neatly arranged and well organized.",
+    "text": "Just got a gorgeous sapphire from Pink City Gems, and it's absolutely stunning! The quality is top-notch, with incredible clarity and color. You can tell they source their stones carefully. So happy with my purchase, it really sparkles beautifully!",
     "used": false,
-    "createdAt": "2026-10-22T05:01:09.244Z"
+    "createdAt": "2026-10-22T05:08:34.512Z"
   },
   {
     "id": "rev_002",
     "categoryId": "gemstone-dealer",
-    "badge": "🤝 Humble Service",
-    "author": "Meenakshi Joshi",
+    "badge": "🤝 Friendly Service",
+    "author": "Rohan Patel",
     "rating": 5,
-    "text": "the owner and the staff are always so polite, humble, and attentive to customer needs. Patient service even during rush hours!",
+    "text": "The team at Pink City Gems is fantastic. I was looking for a specific ruby and the owner (or 'bhaiya' as we call him) was incredibly patient and knowledgeable. He showed me several options, explained the differences, and never rushed me. Felt very comfortable and well-guided.",
     "used": false,
-    "createdAt": "2026-10-22T05:01:09.245Z"
+    "createdAt": "2026-10-22T05:08:34.512Z"
   },
   {
     "id": "rev_003",
     "categoryId": "gemstone-dealer",
-    "badge": "💰 Fair Pricing",
-    "author": "Simranjeet Kaur",
+    "badge": "💰 Great Value",
+    "author": "Priya Singh",
     "rating": 5,
-    "text": "Very fair and honest pricing with zero unnecessary markups. Great value for money and total peace of mind.",
+    "text": "I've been to a few gemstone dealers, and Pink City Gems offers really fair prices without compromising on quality. I felt like I got excellent value for my money on a beautiful emerald. No pushy sales tactics, just honest dealings. Definitely recommend checking them out if you're looking for genuine stones.",
     "used": false,
-    "createdAt": "2026-10-22T05:01:09.245Z"
+    "createdAt": "2026-10-22T05:08:34.512Z"
   },
   {
     "id": "rev_004",
     "categoryId": "gemstone-dealer",
-    "badge": "✨ Clean & Organized",
-    "author": "Kunal Sehgal",
+    "badge": "🛍️ Easy Shopping",
+    "author": "Sameer Gupta",
     "rating": 5,
-    "text": "Super clean, well-maintained environment with prompt assistance and hassle-free billing every single time.",
+    "text": "The store itself is very inviting and well-organized. It was easy to browse through their extensive collection of gems. The atmosphere is calm, not overwhelming, which made the whole experience of choosing my stone quite pleasant and hassle-free. Quick service too!",
     "used": false,
-    "createdAt": "2026-10-22T05:01:09.245Z"
+    "createdAt": "2026-10-22T05:08:34.512Z"
   },
   {
     "id": "rev_005",
     "categoryId": "gemstone-dealer",
-    "badge": "🏆 Neighborhood Trust",
-    "author": "Baldev Krishan",
+    "badge": "👍 Highly Recommend",
+    "author": "Neha Verma",
     "rating": 5,
-    "text": "Our family has trusted Pink City Gems for a long time. Consistent quality, authentic stock, and warm customer care. 5 stars!",
+    "text": "This is my second time buying from Pink City Gems, and they've earned my complete trust. Their expertise is evident, and I always feel confident in the authenticity of their gemstones. I've already recommended them to my family and friends looking for quality gems. They truly stand by their products.",
     "used": false,
-    "createdAt": "2026-10-22T05:01:09.245Z"
+    "createdAt": "2026-10-22T05:08:34.512Z"
   }
 ]
