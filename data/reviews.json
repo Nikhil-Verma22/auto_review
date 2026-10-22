@@ -1,52 +1,52 @@
 [
   {
     "id": "rev_001",
-    "categoryId": "certified-gemstones",
-    "badge": "💎 Natural Gemstones",
+    "categoryId": "gemstone-dealer",
+    "badge": "⭐ Top Quality",
     "author": "Dr. Amit Bansal",
     "rating": 5,
-    "text": "Purchased a certified natural Ceylon Yellow Sapphire (Pukhraj) with authentic lab certification. Outstanding clarity, genuine pricing, and total peace of mind. Truly the most reliable gemstone dealer in Chandigarh!",
+    "text": "One of the most dependable places in the area. High standards, transparent dealing, and genuine quality products. Neatly arranged and well organized.",
     "used": false,
-    "createdAt": "2026-03-01T10:15:00Z"
+    "createdAt": "2026-10-22T05:01:09.244Z"
   },
   {
     "id": "rev_002",
-    "categoryId": "astrological-consultation",
-    "badge": "🪐 Astrological Ratna",
+    "categoryId": "gemstone-dealer",
+    "badge": "🤝 Humble Service",
     "author": "Meenakshi Joshi",
     "rating": 5,
-    "text": "Exceptional Vedic astrological guidance for my birthstone. The energized Emerald ring has brought tremendous clarity and positive momentum. Truly honest and deeply knowledgeable advice!",
+    "text": "the owner and the staff are always so polite, humble, and attentive to customer needs. Patient service even during rush hours!",
     "used": false,
-    "createdAt": "2026-03-04T15:20:00Z"
+    "createdAt": "2026-10-22T05:01:09.245Z"
   },
   {
     "id": "rev_003",
-    "categoryId": "healing-crystals",
-    "badge": "✨ Healing Crystals",
+    "categoryId": "gemstone-dealer",
+    "badge": "💰 Fair Pricing",
     "author": "Simranjeet Kaur",
     "rating": 5,
-    "text": "Mesmerising collection of authentic healing crystals and original Himalayan Rudraksha beads. Got an Amethyst cluster and 7-Chakra bracelet for meditation. Pure positive vibes and fair rates in Sector 23!",
+    "text": "Very fair and honest pricing with zero unnecessary markups. Great value for money and total peace of mind.",
     "used": false,
-    "createdAt": "2026-03-06T10:25:00Z"
+    "createdAt": "2026-10-22T05:01:09.245Z"
   },
   {
     "id": "rev_004",
-    "categoryId": "custom-jewelry",
-    "badge": "💍 Custom Rings",
+    "categoryId": "gemstone-dealer",
+    "badge": "✨ Clean & Organized",
     "author": "Kunal Sehgal",
     "rating": 5,
-    "text": "Custom Panchdhatu astrological ring crafted to perfection! Silky smooth finish, accurate sizing, and designed with an open back for proper skin contact as per Vedic norms. Delivered right on schedule!",
+    "text": "Super clean, well-maintained environment with prompt assistance and hassle-free billing every single time.",
     "used": false,
-    "createdAt": "2026-03-10T13:15:00Z"
+    "createdAt": "2026-10-22T05:01:09.245Z"
   },
   {
     "id": "rev_005",
-    "categoryId": "wholesale-pricing",
-    "badge": "📜 Wholesale & Trust",
-    "author": "Baldev Krishan Jewellers",
+    "categoryId": "gemstone-dealer",
+    "badge": "🏆 Neighborhood Trust",
+    "author": "Baldev Krishan",
     "rating": 5,
-    "text": "100% lab certified natural gemstones at direct wholesale rates. They gladly demonstrated the natural inclusions under magnification. Decades of trust, authentic certification, and humble service in Chandigarh!",
+    "text": "Our family has trusted Pink City Gems for a long time. Consistent quality, authentic stock, and warm customer care. 5 stars!",
     "used": false,
-    "createdAt": "2026-03-15T13:50:00Z"
+    "createdAt": "2026-10-22T05:01:09.245Z"
   }
 ]

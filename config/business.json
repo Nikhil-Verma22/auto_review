@@ -1,7 +1,7 @@
 {
   "business": {
     "name": "Pink City Gems",
-    "legalName": "Pink City Gems (Gemstone Dealer)",
+    "legalName": "Pink City Gems",
     "subtitle": "Certified Gemstone Dealer & Astrological Stones",
     "tagline": "100% Certified Natural Gemstones, Vedic Rashi Ratna & Healing Crystals",
     "locality": "Sector 23-C, Chandigarh",
@@ -19,7 +19,7 @@
     "targetUrl": "https://nikhil-verma22.github.io/auto_review/",
     "standeeUrl": "https://nikhil-verma22.github.io/auto_review/standee.html",
     "adminUrl": "https://nikhil-verma22.github.io/auto_review/admin.html",
-    "rating": 5.0,
+    "rating": 5,
     "totalReviewsDisplay": "4.9 ★ (150+ Verified Reviews)"
   },
   "categories": [
