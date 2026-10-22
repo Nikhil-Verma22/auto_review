@@ -245,7 +245,7 @@
           <p class="card-text">"${r.text}"</p>
           <button class="btn-copy-post" data-id="${r.id}" data-text="${encodeURIComponent(r.text)}" id="btn-copy-${r.id}">
             <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-            <span>Tap to Copy & Open Review Dialog</span>
+            <span>✨ Select Review & Open Google (Auto-Copies)</span>
           </button>
         </div>
       `;
@@ -281,28 +281,35 @@
 
   // Copy to clipboard & trigger direct Google Review popup
   function handleCopyAndPost(reviewId, text) {
-    // 1. Copy to clipboard
+    // 1. Copy to clipboard (Dual synchronous + async write for 100% mobile browser coverage)
+    fallbackCopy(text);
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
-    } else {
-      fallbackCopy(text);
+      navigator.clipboard.writeText(text).catch(() => {});
     }
 
     // 2. Mark review as copied
     markReviewCopied(reviewId);
 
-    // 3. Update modal preview & direct button
+    // 3. Update modal preview, business name & direct button
+    const modalBizName = document.getElementById('modal-biz-name');
+    if (modalBizName) {
+      modalBizName.textContent = activeBusiness.colloquial || activeBusiness.name || 'this business';
+    }
     if (modalPreviewText) {
       modalPreviewText.textContent = `“${text}”`;
     }
     if (modalDirectBtn) {
       modalDirectBtn.href = activeBusiness.googleReviewUrl;
+      modalDirectBtn.onclick = () => {
+        window.location.href = activeBusiness.googleReviewUrl;
+      };
     }
 
     // 4. Show confirmation modal
     if (modalOverlay) {
       modalOverlay.classList.add('active');
       if (modalProgressBar) {
+        modalProgressBar.style.transition = 'width 2s linear';
         modalProgressBar.style.width = '0%';
         setTimeout(() => {
           modalProgressBar.style.width = '100%';
@@ -310,18 +317,30 @@
       }
     }
 
-    // 5. Auto-redirect to Google Write-a-Review popup dialog in 1.2s
+    // 5. Auto-redirect to Google Write-a-Review popup dialog in 2.2s
     if (testModeActive && pauseRedirect) {
       console.log('🧪 Test Mode: Redirect paused. Review URL is:', activeBusiness.googleReviewUrl);
       setTimeout(() => {
         if (modalOverlay) modalOverlay.classList.remove('active');
-      }, 1500);
+      }, 2000);
       return;
     }
 
+    const countdownText = document.getElementById('modal-countdown-text');
+    let timeLeft = 2;
+    const timerInterval = setInterval(() => {
+      timeLeft--;
+      if (countdownText && timeLeft > 0) {
+        countdownText.textContent = `Opening review popup in ${timeLeft}s...`;
+      } else {
+        clearInterval(timerInterval);
+      }
+    }, 1000);
+
     setTimeout(() => {
+      clearInterval(timerInterval);
       window.location.href = activeBusiness.googleReviewUrl;
-    }, 1200);
+    }, 2200);
   }
 
   // Fallback for clipboard
