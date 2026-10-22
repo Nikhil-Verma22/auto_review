@@ -63,6 +63,7 @@ graph LR
 ```text
 ├── .github/
 │   └── workflows/
+│       ├── generate-ai-reviews.yml       # Secure Gemini LLM Review Framing for any Maps URL (secrets.GEMINI_API_KEY)
 │       ├── deploy-pages.yml              # Auto-generates QR assets, data bundle, & deploys to GitHub Pages
 │       ├── claim-review.yml              # Manually mark a review as used globally
 │       ├── replenish-seo-reviews.yml     # Automated weekly replenishment of fresh SEO reviews
@@ -72,6 +73,7 @@ graph LR
 ├── data/
 │   └── reviews.json                      # Pool of 5 curated natural 5-star reviews
 ├── scripts/
+│   ├── generate_ai_reviews.mjs           # Secure Gemini AI review generator & business updater
 │   ├── generate_qr_assets.mjs            # Generates qr-code.svg, qr-code.png (1024x1024), and data-bundle.js
 │   ├── replenish_reviews.mjs             # Combinatorial SEO generation engine (+ optional Gemini API)
 │   └── auto_reply_reviews.mjs            # Google Business Profile AI reply generator & API poller

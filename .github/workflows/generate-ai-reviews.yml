@@ -1,0 +1,57 @@
+name: Generate AI Reviews & Standee for Any Business
+
+on:
+  workflow_dispatch:
+    inputs:
+      maps_url:
+        description: 'Google Maps Share Link or Place ID (e.g. https://maps.app.goo.gl/...)'
+        required: true
+        type: string
+      owner_name:
+        description: 'Owner / Staff Name or Famous Items (e.g. Ramesh Uncle, fresh dairy)'
+        required: false
+        type: string
+        default: ''
+      sample_reviews:
+        description: 'Paste 1-2 Existing Google Reviews / Notes to mirror customer vibe'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  generate-ai-reviews:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Execute Gemini AI Business & Review Framing Engine
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          MAPS_URL: ${{ github.event.inputs.maps_url }}
+          OWNER_NAME: ${{ github.event.inputs.owner_name }}
+          SAMPLE_REVIEWS: ${{ github.event.inputs.sample_reviews }}
+        run: |
+          node scripts/generate_ai_reviews.mjs
+
+      - name: Commit & Push Updated Reviews & Standee Assets
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add config/business.json data/reviews.json public/assets/
+          git commit -m "feat(ai): generated 5 Gemini AI reviews for ${{ github.event.inputs.maps_url }}" || echo "No changes to commit"
+          git push origin main
