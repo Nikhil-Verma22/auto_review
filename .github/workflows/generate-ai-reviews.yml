@@ -52,7 +52,8 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git reset origin/main
           git add config/business.json data/reviews.json public/assets/
           git commit -m "feat(ai): generated 5 Gemini AI reviews for ${{ github.event.inputs.maps_url }}" || echo "No changes to commit"
-          git pull --rebase origin main
           git push origin main
