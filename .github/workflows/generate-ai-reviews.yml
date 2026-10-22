@@ -20,10 +20,15 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   generate-ai-reviews:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -57,3 +62,15 @@ jobs:
           git add config/business.json data/reviews.json public/assets/
           git commit -m "feat(ai): generated 5 Gemini AI reviews for ${{ github.event.inputs.maps_url }}" || echo "No changes to commit"
           git push origin main
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'public'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
